@@ -1,5 +1,5 @@
-export default function Home({ params }) {
+export default function UserView() {
     return (
-     <div>Kullanıcı Detayları{params.id}</div>
+     <div>Kullanıcı Görüntüle// Sil işlemleri vs</div>
     )
   }

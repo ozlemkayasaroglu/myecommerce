@@ -2,132 +2,139 @@
 import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
 
-
-
-
 export default function Edit({ params }) {
-  const userId = params.id;
+  
+  const [id, setId] = useState("");
+  const [image, setImage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState({
+    address: "",
+    city: "",
+  });
+  const [company, setCompany] = useState({
+    name: "",
+    address: {
+      address: "",
+      city: "",
+    },
+  });
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    async function fetchData() {
+      const data = await UserData(params.id);
+      setId(data[0].id);
+      setImage(data[0].image);
+      setFirstName(data[0].firstName);
+      setLastName(data[0].lastName);
+      setUsername(data[0].username);
+      setPhone(data[0].phone);
+      setAge(data[0].age);
+      setEmail(data[0].email);
+      setAddress(data[0].address);
+      setCompany(data[0].company);
+    }
+    fetchData();
+  }, [id]);
+
+  const handleClickUpdate = async (e) => {
     e.preventDefault();
-  
     try {
-      const response = await fetch(`/users?id=${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-  
+      const dataToUpdate = {
+        image: image,
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        phone: phone,
+        age: age,
+        email: email,
+        address: address,
+        company: company,
+      };
+
+      const response = await fetch(
+        `http://localhost:3001/users/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToUpdate),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error('Verileri güncellerken bir hata oluştu.');
+        throw new Error("Verileri güncellerken bir hata oluştu.");
       }
-  
-      console.log('Veriler başarıyla güncellendi');
+      const updatedData = await response.json();
+      console.log("Veriler başarıyla güncellendi:", updatedData);
     } catch (error) {
       console.error(error.message);
     }
   };
 
-  const [userData, setUserData] = useState({
-    id: '',
-    image: '',
-    firstName: '',
-    lastName:'',
-    userName:'',
-    phone: '',
-    age:'',
-    email:'',
-    address: {
-      address: '',
-      city:'',
-    },
-    company: {
-      address: {
-        address: '',
-        city: '',
-      },
-    },
-
-  });
-
-  
-  
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-
-  if (name in userData) {
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  } else {
-    
-    const [parent, child] = name.split('.');
-    setUserData({
-      ...userData,
-      [parent]: {
-        ...userData[parent],
-        [child]: value,
-      },
-    });
-  }
-  console.log(userData);
-};
- 
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await UserData(params.id)
-      setUserData(data[0])
-    }
-    fetchData()
-  }, [userId]);
-
-  
-  
-
   return (
     <div>
       <h1>Kullanıcı Düzenleme Sayfası</h1>
-      {userData ?
-      <form>
-        <label>Kullanıcı Id </label>
-        <input  onChange={handleInputChange} value={userData.id}></input><br />
-
-        <label>Profil Fotoğrafı:</label>
-        <img src={userData.image} alt="Profil Fotoğrafı" /><br />
-
-        <label>First Name: </label>
-        <input  onChange={handleInputChange}  value={userData.firstName}></input>
-        <br />
-        <label>Last Name: </label>
-        <input  onChange={handleInputChange} value={userData.lastName}></input>
-        <br />
-        <label>Kullanıcı Adı: </label>
-        <input  onChange={handleInputChange} value={userData.username}></input>
-        <br />
-        <label>Telefon Numarası: </label>
-        <input onChange={handleInputChange} value={userData.phone}></input>
-        <br />
-        <label>Age: </label>
-        <input  onChange={handleInputChange} value={userData.age}></input>
-        <br />
-        <label>Email </label>
-        <input  onChange={handleInputChange} value={userData.email}></input>
-        <br />
-        <label>Adres: </label>
-        <input  onChange={handleInputChange} value={userData.address.address + " /"}></input>
-        <br />
-        <label>İş Adres: </label>
-        <input  onChange={handleInputChange} value={userData.company.address.address + " /"}></input>
-        <br />
-        <button onClick={handleSubmit}>Güncelle</button>
-      </form>
-    :
-      <div>Loading</div>
-    }
+      {firstName ? (
+        <form>
+          <img
+            onChange={(e) => setImage(e.target.value)}
+            src={image}
+            alt="Profil Fotoğrafı"
+          />
+          <br />
+          <label>Kullanıcı Id </label>
+          <input value={id} />
+          <br />
+          <label>First Name: </label>
+          <input
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+          />
+          <br />
+          <label>Last Name: </label>
+          <input
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+          />
+          <br />
+          <label>Kullanıcı Adı: </label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+          />
+          <br />
+          <label>Telefon Numarası: </label>
+          <input onChange={(e) => setPhone(e.target.value)} value={phone} />
+          <br />
+          <label>Age: </label>
+          <input onChange={(e) => setAge(e.target.value)} value={age} />
+          <br />
+          <label>Email </label>
+          <input onChange={(e) => setEmail(e.target.value)} value={email} />
+          <br />
+          <label>Adres: </label>
+          <textarea
+            onChange={(e) => setAddress(e.target.value)}
+            value={address.address}
+          />
+          <br />
+          <label>İş Adres: </label>
+          <textarea
+            onChange={(e) => setCompany(e.target.value)}
+            value={company.address.address}
+          />
+          <br />
+          <button onClick={handleClickUpdate}>Güncelle</button>
+        </form>
+      ) : (
+        <div>Kullanıcı Listesi Yükleniyor... ... ...</div>
+      )}
     </div>
   );
 }

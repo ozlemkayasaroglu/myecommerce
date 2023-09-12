@@ -62,28 +62,13 @@
       "userAgent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/12.0.702.0 Safari/534.24"
     },
     {
-      "id": 2,
+      "image": "https://robohash.org/doloremquesintcorrupti.png",
       "firstName": "Sheldon",
       "lastName": "Quigley",
-      "maidenName": "Cole",
-      "age": 28,
-      "gender": "male",
-      "email": "hbingley1@plala.or.jp",
-      "phone": "+7 813 117 7139",
       "username": "hbingley1",
-      "password": "CQutx25i8r",
-      "birthDate": "2003-08-02",
-      "image": "https://robohash.org/doloremquesintcorrupti.png",
-      "bloodGroup": "O+",
-      "height": 187,
-      "weight": 74,
-      "eyeColor": "Brown",
-      "hair": {
-        "color": "Blond",
-        "type": "Curly"
-      },
-      "domain": "51.la",
-      "ip": "253.240.20.181",
+      "phone": "+7 813 117 7139",
+      "age": 28,
+      "email": "hbingley1@plala.or.jp",
       "address": {
         "address": "6007 Applegate Lane",
         "city": "Louisville",
@@ -93,15 +78,6 @@
         },
         "postalCode": "40219",
         "state": "KY"
-      },
-      "macAddress": "13:F1:00:DA:A4:12",
-      "university": "Stavropol State Technical University",
-      "bank": {
-        "cardExpire": "10/23",
-        "cardNumber": "5355920631952404",
-        "cardType": "mastercard",
-        "currency": "Ruble",
-        "iban": "MD63 L6YC 8YH4 QVQB XHIK MTML"
       },
       "company": {
         "address": {
@@ -118,9 +94,7 @@
         "name": "Aufderhar-Cronin",
         "title": "Senior Cost Accountant"
       },
-      "ein": "52-5262907",
-      "ssn": "447-08-9217",
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"
+      "id": 2
     },
     {
       "id": 3,
@@ -245,65 +219,25 @@
       "userAgent": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.17 Safari/537.11"
     },
     {
-      "id": 5,
-      "firstName": "Mavis",
-      "lastName": "Schultz",
-      "maidenName": "Yundt",
-      "age": 38,
-      "gender": "male",
-      "email": "kmeus4@upenn.edu",
-      "phone": "+372 285 771 1911",
-      "username": "kmeus4",
-      "password": "aUTdmmmbH",
-      "birthDate": "1968-11-03",
-      "image": "https://robohash.org/adverovelit.png",
-      "bloodGroup": "O+",
-      "height": 188,
-      "weight": 106.3,
-      "eyeColor": "Brown",
-      "hair": {
-        "color": "Brown",
-        "type": "Curly"
-      },
-      "domain": "columbia.edu",
-      "ip": "103.72.86.183",
+      "firstName": "John",
+      "lastName": "Doe",
+      "username": "johndoe",
+      "phone": "487-28-6642",
+      "image": "https://robohash.org/facilisdignissimosdolore.png",
+      "age": "33",
+      "email": "johndoe@gmail.com",
       "address": {
-        "address": "2721 Lindsay Avenue",
-        "city": "Louisville",
-        "coordinates": {
-          "lat": 38.263793,
-          "lng": -85.700243
-        },
-        "postalCode": "40206",
-        "state": "KY"
-      },
-      "macAddress": "F8:04:9E:ED:C0:68",
-      "university": "Estonian University of Life Sciences",
-      "bank": {
-        "cardExpire": "01/24",
-        "cardNumber": "4917245076693618",
-        "cardType": "visa-electron",
-        "currency": "Euro",
-        "iban": "IT41 T114 5127 716J RGYB ZRUX DSJ"
+        "address": "210 Green Road",
+        "city": "Manchester"
       },
       "company": {
+        "name": "Wolff and Sons",
         "address": {
-          "address": "8398 West Denton Lane",
-          "city": "Glendale",
-          "coordinates": {
-            "lat": 33.515353,
-            "lng": -112.240812
-          },
-          "postalCode": "85305",
-          "state": "AZ"
-        },
-        "department": "Support",
-        "name": "Adams Inc",
-        "title": "Web Developer I"
+          "address": "220 Road Green Villiage",
+          "city": "Manhattan"
+        }
       },
-      "ein": "18-7178563",
-      "ssn": "667-98-5357",
-      "userAgent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.1 Safari/535.1"
+      "id": 5
     },
     {
       "id": 6,
