@@ -133,7 +133,7 @@ export default function Edit({ params }) {
           <button onClick={handleClickUpdate}>Güncelle</button>
         </form>
       ) : (
-        <div>Kullanıcı Listesi Yükleniyor... ... ...</div>
+        <div>Kullanıcı Listesi Yükleniyor...</div>
       )}
     </div>
   );
