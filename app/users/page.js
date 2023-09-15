@@ -25,29 +25,29 @@ export default function UserList() {
   }, []);
 
   return (
-    <div>
-    <h1>Kullanıcı Listesi</h1>
+       <div>
+      <h1>Kullanıcı Listesi</h1>
 
-    {loading ? (
-      <p>Veriler yükleniyor...</p>
-    ) : (
-      <table>
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>İsim-Soyisim</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.firstName} {user.lastName}</td>
+      {loading ? (
+        <p>Veriler yükleniyor...</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>İsim-Soyisim</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </div>
-);
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.firstName} {user.lastName}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 }

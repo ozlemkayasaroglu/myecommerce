@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
 
-export default function Edit({ params }) {
-  
+export default function EditUser({ params }) {
   const [id, setId] = useState("");
   const [image, setImage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -23,6 +22,8 @@ export default function Edit({ params }) {
       city: "",
     },
   });
+  const combinedAddress = `${address.address}, ${address.city}`;
+  const combinedCompany = `${company.address.address}, ${company.address.city}`;
 
   useEffect(() => {
     async function fetchData() {
@@ -52,20 +53,24 @@ export default function Edit({ params }) {
         phone: phone,
         age: age,
         email: email,
-        address: address,
-        company: company,
+        address: {
+          address: address,
+          city: city,
+        },
+        company: {
+          address: address,
+          address: address,
+          city: city,
+        },
       };
 
-      const response = await fetch(
-        `http://localhost:3001/users/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataToUpdate),
-        }
-      );
+      const response = await fetch(`http://localhost:3001/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToUpdate),
+      });
 
       if (!response.ok) {
         throw new Error("Verileri güncellerken bir hata oluştu.");
@@ -83,14 +88,17 @@ export default function Edit({ params }) {
       {firstName ? (
         <form>
           <img
-            onChange={(e) => setImage(e.target.value)}
             src={image}
             alt="Profil Fotoğrafı"
           />
           <br />
-          <label>Kullanıcı Id </label>
-          <input value={id} />
-          <br />
+          <label>Profil Fotoğrafı: </label>
+          <input
+            onchange={(e) => setImage(e.target.value)}
+            value={image}
+          />
+          <button onClick={handleClickUpdate}>Güncelle</button>
+         <br/>
           <label>First Name: </label>
           <input
             onChange={(e) => setFirstName(e.target.value)}
@@ -121,13 +129,13 @@ export default function Edit({ params }) {
           <label>Adres: </label>
           <textarea
             onChange={(e) => setAddress(e.target.value)}
-            value={address.address}
+            value={combinedAddress}
           />
           <br />
           <label>İş Adres: </label>
           <textarea
             onChange={(e) => setCompany(e.target.value)}
-            value={company.address.address}
+            value={combinedCompany}
           />
           <br />
           <button onClick={handleClickUpdate}>Güncelle</button>

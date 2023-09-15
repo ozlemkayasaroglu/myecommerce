@@ -1,27 +1,79 @@
 "use client";
 import { useState } from "react";
 
-
 export default function CreateUser() {
   const [createUser, setCreateUser] = useState({
     id: "",
+    image: "",
     firstName: "",
     lastName: "",
-    userName: "",
+    username: "",
     phone: "",
     age: "",
     email: "",
-    address: "",
-    company: "",
+    address: {
+      address: "",
+      city: "",
+    },
+    company: {
+      address: "",
+      city: "",
+    },
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCreateUser((prevCreateUser) => ({
-      ...prevCreateUser,
-      [name]: value,
-    }));
+
+    if (name === "phone" || name === "age") {
+      if (!/^[0-9]+$/.test(value)) {
+        alert(`Lütfen sadece numaralardan oluşan bir değer girin.`);
+        return; 
+      }
+    }
+
+    // EMAİL KONTROLUNDE HATA VAR
+    // if (name === "email") {
+    //   // Email adresi geçerli bir formatı kontrol etmek için bir regex kullanıyoruz
+    //   if (!isValidEmail(value)) {
+    //     alert(`Lütfen geçerli bir email adresi girin.`);
+    //     return;
+    //   }
+    // }
+    // function isValidEmail(email) {
+    //   const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    //   return emailRegex.test(email);
+    // }
+
+    setCreateUser((prevCreateUser) => {
+      if (name.startsWith("address.")) {
+        const addressName = name.split(".")[1];
+        return {
+          ...prevCreateUser,
+          address: {
+            ...prevCreateUser.address,
+            [addressName]: value,
+          },
+        };
+      } else if (name.startsWith("company.")) {
+        const companyName = name.split(".")[1];
+        return {
+          ...prevCreateUser,
+          company: {
+            ...prevCreateUser.company,
+            [companyName]: value,
+          },
+        };
+      } else {
+        return {
+          ...prevCreateUser,
+          [name]: value,
+        };
+      }
+    });
   };
+
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,71 +100,101 @@ export default function CreateUser() {
   return (
     <div>
       <h1>Kullanıcı Kaydı Sayfası</h1>
-        <form>
-          <label>First Name: </label>
-          <input
-            type="text"
-            name="firstName"
-            value={createUser.firstName}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Last Name: </label>
-          <input
-            type="text"
-            name="lastName"
-            value={createUser.lastName}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Kullanıcı Adı: </label>
-          <input
-            type="text"
-            name="userName"
-            value={createUser.userName}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Telefon Numarası: </label>
-          <input
-            type="text"
-            name="phone"
-            value={createUser.phone}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Age: </label>
-          <input
-            type="text"
-            name="age"
-            value={createUser.age}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Email: </label>
-          <input
-            type="text"
-            name="email"
-            value={createUser.email}
-            onChange={handleChange}
-          />
-          <br />
-          <label>Adres: </label>
-          <textarea
-            name="address"
-            value={createUser.address}
-            onChange={handleChange}
-          />
-          <br />
-          <label>İş Adres: </label>
-          <textarea
-            name="workAddress"
-            value={createUser.workAddress}
-            onChange={handleChange}
-          />
-          <br />
-          <button onClick={handleSubmit}>Gönder</button>
-        </form>
+      <label >Profil Fotoğrafı: </label>
+      <input
+        placeholder="profil fotoğrafı yükle"
+        type="text"
+        name="image"
+        value={createUser.image}
+        onChange={handleChange}
+      />
+      <button onClick={handleSubmit}>Yükle</button>
+      <form>
+        <label>First Name: </label>
+        <input
+          type="text"
+          name="firstName"
+          value={createUser.firstName}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Last Name: </label>
+        <input
+          type="text"
+          name="lastName"
+          value={createUser.lastName}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Kullanıcı Adı: </label>
+        <input
+          type="text"
+          name="username"
+          value={createUser.username}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Telefon Numarası: </label>
+        <input
+          type="text"
+          name="phone"
+          value={createUser.phone}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Age: </label>
+        <input
+          type="text"
+          name="age"
+          value={createUser.age}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Email: </label>
+        <input
+          type="text"
+          name="email"
+          value={createUser.email}
+          onChange={handleChange}
+        />
+        <br />
+        <label>Adres: </label>
+        <textarea
+          type="text"
+          name="address.address"
+          value={createUser.address.address}
+          onChange={handleChange}
+        />
+        <label>Şehir: </label>
+        <textarea
+          type="text"
+          name="address.city"
+          value={createUser.address.city}
+          onChange={handleChange}
+        />
+        <label>Şirket/ Firma Adı: </label>
+        <textarea
+          type="text"
+          name="company.name"
+          value={createUser.company.name}
+          onChange={handleChange}
+        />
+        <label>Adres: </label>
+        <textarea
+          type="text"
+          name="company.address"
+          value={createUser.company.address}
+          onChange={handleChange}
+        />
+        <label>Şehir: </label>
+        <textarea
+          type="text"
+          name="company.city"
+          value={createUser.company.city}
+          onChange={handleChange}
+        />
+        <button onClick={handleSubmit}>Gönder</button>
+      </form>
     </div>
   );
 }
