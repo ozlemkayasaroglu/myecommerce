@@ -18,6 +18,7 @@ export default function CreateUser() {
     company: {
       address: "",
       city: "",
+      name:"",
     },
   });
 
@@ -30,19 +31,6 @@ export default function CreateUser() {
         return; 
       }
     }
-
-    // EMAİL KONTROLUNDE HATA VAR
-    // if (name === "email") {
-    //   // Email adresi geçerli bir formatı kontrol etmek için bir regex kullanıyoruz
-    //   if (!isValidEmail(value)) {
-    //     alert(`Lütfen geçerli bir email adresi girin.`);
-    //     return;
-    //   }
-    // }
-    // function isValidEmail(email) {
-    //   const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-    //   return emailRegex.test(email);
-    // }
 
     setCreateUser((prevCreateUser) => {
       if (name.startsWith("address.")) {
@@ -83,14 +71,14 @@ export default function CreateUser() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(createUser), // Kullanıcı verilerini JSON formatına çevirip gönderin
+        body: JSON.stringify(createUser), 
       });
 
       if (!response.ok) {
         throw new Error("Kullanıcı kaydı sırasında bir hata oluştu.");
       }
 
-      // Başarı durumunda gerekli işlemleri yapabilirsiniz, örneğin yönlendirme yapabilirsiniz.
+      
       console.log("Kullanıcı başarıyla kaydedildi.");
     } catch (error) {
       console.error(error.message);

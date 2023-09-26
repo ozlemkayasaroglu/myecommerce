@@ -15,15 +15,12 @@ export default function EditUser({ params }) {
     address: "",
     city: "",
   });
+
   const [company, setCompany] = useState({
+    address: "",
+    city: "",
     name: "",
-    address: {
-      address: "",
-      city: "",
-    },
   });
-  const combinedAddress = `${address.address}, ${address.city}`;
-  const combinedCompany = `${company.address.address}, ${company.address.city}`;
 
   useEffect(() => {
     async function fetchData() {
@@ -59,8 +56,8 @@ export default function EditUser({ params }) {
         },
         company: {
           address: address,
-          address: address,
           city: city,
+          name: name,
         },
       };
 
@@ -87,18 +84,12 @@ export default function EditUser({ params }) {
       <h1>Kullanıcı Düzenleme Sayfası</h1>
       {firstName ? (
         <form>
-          <img
-            src={image}
-            alt="Profil Fotoğrafı"
-          />
+          <img src={image} alt="Profil Fotoğrafı" />
           <br />
           <label>Profil Fotoğrafı: </label>
-          <input
-            onchange={(e) => setImage(e.target.value)}
-            value={image}
-          />
+          <input onChange={(e) => setImage(e.target.value)} value={image} />
           <button onClick={handleClickUpdate}>Güncelle</button>
-         <br/>
+          <br />
           <label>First Name: </label>
           <input
             onChange={(e) => setFirstName(e.target.value)}
@@ -120,28 +111,51 @@ export default function EditUser({ params }) {
           <label>Telefon Numarası: </label>
           <input onChange={(e) => setPhone(e.target.value)} value={phone} />
           <br />
-          <label>Age: </label>
+          <label>Yaş: </label>
           <input onChange={(e) => setAge(e.target.value)} value={age} />
           <br />
           <label>Email </label>
           <input onChange={(e) => setEmail(e.target.value)} value={email} />
           <br />
-          <label>Adres: </label>
-          <textarea
+          <h2>Adres-1 </h2>
+          <label>Mahalle-Sokak: </label>
+          <input
             onChange={(e) => setAddress(e.target.value)}
-            value={combinedAddress}
+            value={address.address}
           />
           <br />
-          <label>İş Adres: </label>
-          <textarea
+
+          <label>Şehir: </label>
+          <input
+            onChange={(e) => setAddress(e.target.value)}
+            value={address.city}
+          />
+          <br />
+
+          <h2>Adres-2</h2>
+          <label>Şirket Adı: </label>
+          <input
             onChange={(e) => setCompany(e.target.value)}
-            value={combinedCompany}
+            value={company.name}
           />
           <br />
+          <label>Mahalle-Sokak: </label>
+          <input
+            onChange={(e) => setCompany(e.target.value)}
+            value={company.address}
+          />
+          <br />
+          <label>Şehir: </label>
+          <input
+            onChange={(e) => setCompany(e.target.value)}
+            value={company.city}
+          />
+          <br />
+
           <button onClick={handleClickUpdate}>Güncelle</button>
         </form>
       ) : (
-        <div>Kullanıcı Listesi Yükleniyor...</div>
+        <div>Kullanıcı Düzenleme Sayfası Yükleniyor...</div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
@@ -25,28 +26,40 @@ export default function UserList() {
   }, []);
 
   return (
-       <div>
+    <div>
       <h1>Kullanıcı Listesi</h1>
 
       {loading ? (
         <p>Veriler yükleniyor...</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>İsim-Soyisim</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.firstName} {user.lastName}</td>
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>İsim-Soyisim</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>
+                    <Link
+                      href={`/users/${user.id}`}
+                    >{`${user.firstName} ${user.lastName}`}</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div>
+            <button>
+              {" "}
+              <Link href={`/users/$[id]/create`}>Yeni Kullanıcı Ekle</Link>{" "}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

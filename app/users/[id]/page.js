@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
+import Link from "next/link";
 
 export default function ShowUser({ params }) {
+  const [users, setUsers] = useState([]);
   const [id, setId] = useState("");
   const [image, setImage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -18,12 +20,14 @@ export default function ShowUser({ params }) {
   const [company, setCompany] = useState({
       address: "",
       city: "",
+      name: "",
     
   });
 
   useEffect(() => {
     async function fetchData() {
       const data = await UserData(params.id);
+      setUsers(data[0]);
       setId(data[0].id);
       setImage(data[0].image);
       setFirstName(data[0].firstName);
@@ -58,7 +62,7 @@ export default function ShowUser({ params }) {
       <h1>Kullanıcı Görüntüleme Sayfası</h1>
       <></>
       {id ? (
-        <><>
+      <>
           <div>
             <img src={image} alt="Profil Fotoğrafı" />
           </div>
@@ -96,19 +100,27 @@ export default function ShowUser({ params }) {
               </tr>
               <tr>
                 <td>Adres</td>
-                <td>{address.address} / {address.city}</td> 
+                <td>{address.address} / {address.city}</td>
               </tr>
             </tbody>
             <tfoot>
+            <tr>
+                <td>Şirket/ Firma Adı:</td>
+                <td>{company.name} </td>
+              </tr>
               <tr>
                 <td>İş Adresi:</td>
-                <td>{company.address} / {company.city}</td> 
+                <td>{company.address} / {company.city}</td>
               </tr>
             </tfoot>
           </table>
-        </><><button onClick={handleClickDelete}>Sil</button></></>
+          
+        <button>  <Link href={`/users/${id}/edit`}> Düzenle</Link></button>
+        <button onClick={handleClickDelete}>Sil</button>
+        </>
+         
       ) : (
-        <div>Kullanıcı Listesi Yükleniyor...</div>
+        <div>Kullanıcı Görüntüleme Sayfası Yükleniyor...</div>
       )}
     </div>
   );
