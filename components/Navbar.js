@@ -1,27 +1,36 @@
+
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/src/echo.png";
 
 const Navbar = () => {
   return (
-    <div>
-      <div>
-        <a> My E-commerce</a>
-      </div>
+    <nav className="bg-slate-50 py-3 ">
+      <div className="container mx-auto flex justify-between items-center">
+       
+        <div className="flex-none">
+        <Link href="/">
+        <Image
+          className="logo"
+          src={logo}
+          width={200}
+          height={100}
+          alt="echo"
+        />
+        </Link>
+        </div>
 
-      <div>
-        <ul>
-          <li>
-            <Link href="/">Ana Sayfa</Link>
-          </li>
-          <li>
-            <Link href="/users">Kullanıcılar</Link>
-          </li>
-          <li>
-            <Link href="/products">Ürün Listesi</Link>
-          </li>
-        </ul>
+        <div className="flex-none space-x-4 ml-auto">
+          <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
+            <p className="text-white p-2 ">Sign Up</p>
+          </button>
+          <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
+           <p className="text-white p-2">Log In</p> 
+          </button>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
