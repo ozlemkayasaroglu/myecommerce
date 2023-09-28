@@ -49,7 +49,7 @@
       "id": 6,
       "name": "Toy Apparatus",
       "category": "Entertainment",
-      "image": "https://gencraft.ai/p/JtLM8M",
+      "image": "https://robohash.org/trescolcoffee.png",
       "price": "23.99",
       "description": "Quisque laoreet ullamcorper consequat",
       "features": "Maecenas maximus condimentum efficitur. Phasellus vitae ullamcorper lectus, non mattis augue. Phasellus vel efficitur ipsum. Praesent tempus porttitor ante, ut efficitur diam mollis vel. Vestibulum quis accumsan turpis. Integer accumsan, felis quis fringilla dignissim, nisl magna pulvinar lacus, nec aliquam mauris enim ut risus. In ultrices tempus nibh, rutrum dictum quam faucibus quis. Donec ut nunc nec nisl elementum consectetur."
@@ -58,7 +58,7 @@
       "id": 7,
       "name": "Engine Rig",
       "category": "Automotive",
-      "image": "https://gencraft.ai/p/h913bw",
+      "image": "https://robohash.org/enginerig.png",
       "price": "164",
       "description": "Proin vehicula felis non ligula sollicitudin placerat ut nec mauris",
       "features": "Praesent sit amet sem tempor, blandit risus id, aliquam metus. Fusce convallis consequat sodales. Nam dignissim consequat finibus. Sed condimentum finibus neque, ut tincidunt ipsum lobortis vel. Vivamus sed rutrum nisl, sed hendrerit ipsum. Nullam volutpat ut dui nec gravida. In non malesuada tortor. Nullam gravida nulla vel ante condimentum volutpat. Donec et odio ac leo elementum lacinia. Integer consequat vulputate dolor a maximus. Maecenas ut commodo lacus. Donec dictum est nec auctor condimentum. Nam maximus dapibus lacus ut ultricies. Praesent vulputate dapibus risus, quis suscipit arcu pellentesque eget. Nam malesuada lorem ut lacus tincidunt, id pellentesque velit pulvinar. Nulla facilisi."
@@ -67,40 +67,13 @@
       "id": 8,
       "name": "Cooking Implement",
       "category": "Home",
-      "image": "https://gencraft.ai/p/JK0EuH",
+      "image": "https://robohash.org/cookingImplement.png",
       "price": "125.95",
       "description": "saMorbi odio eros, euismod eget sapien non, placerat vehicula exa",
       "features": "Nunc viverra fringilla purus nec pellentesque. Nulla pellentesque sagittis mi, id lacinia nisl fringilla a. Suspendisse potenti. Sed vel sem quis sapien cursus convallis placerat sit amet sapien. Sed mollis imperdiet metus vel malesuada. Curabitur vel dignissim nunc. Morbi dapibus imperdiet elit at blandit. Donec non feugiat quam, et vestibulum felis. Donec venenatis enim vitae ante pellentesque sollicitudin. Donec sed pretium risus, eget vestibulum lacus. Donec sed tempus velit. In elementum lectus vitae facilisis faucibus. Aliquam elementum aliquet nulla, posuere venenatis nisi laoreet at. Suspendisse ac nulla dui. Cras at semper elit."
     },
     {
       "id": 9,
-      "image": "https://robohash.org/doloremquesintcorrupti.png",
-      "name": "dada",
-      "category": "da",
-      "price": "200",
-      "description": "adadad",
-      "features": "sadada"
-    },
-    {
-      "id": 10,
-      "image": "https://robohash.org/doloremquesintcorrupti.png",
-      "name": "dada",
-      "category": "da",
-      "price": "200",
-      "description": "adadad",
-      "features": "sadada"
-    },
-    {
-      "id": 11,
-      "image": "https://robohash.org/doloremquesintcorrupti.png",
-      "name": "dada",
-      "category": "da",
-      "price": "200",
-      "description": "adadad",
-      "features": "sadada"
-    },
-    {
-      "id": 12,
       "image": "https://robohash.org/doloremquesintcorrupti.png",
       "name": "dada",
       "category": "da",
