@@ -23,7 +23,12 @@ const Navbar = () => {
 
         <div className="flex-none space-x-4 ml-auto">
           <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
-            <p className="text-white p-2 ">Sign Up</p>
+            <p className="text-white p-2 ">
+              <Link href="../users/create/">
+              Sign Up
+              </Link>
+              
+            </p>
           </button>
           <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
            <p className="text-white p-2">Log In</p> 
