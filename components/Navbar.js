@@ -31,7 +31,10 @@ const Navbar = () => {
             </p>
           </button>
           <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
-           <p className="text-white p-2">Log In</p> 
+           <p className="text-white p-2">
+           <Link href="../users/login/">
+              Login
+              </Link></p> 
           </button>
         </div>
       </div>
