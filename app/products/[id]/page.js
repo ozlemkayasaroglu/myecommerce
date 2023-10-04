@@ -51,63 +51,47 @@ export default function ShowProduct({ params }) {
       <></>
       {id ? (
         <>
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div className="flex">
-              <div className="p-4 w-1/2">
-                <img
-                  className="mx-auto w-full border rounded-md"
-                  src={image}
-                  alt="Ürün Fotoğrafı"
-                />
+          <div className="flex">
+            <img
+              className="border rounded-md bg-white m-4 w-1/3"
+              src={image}
+              alt="Ürün Fotoğrafı"
+            />
+            <div className="border rounded-md bg-white m-4 w-2/3">
+              <h2 className="text-3xl text-gray-600 font-semibold m-4 mt-12 mb-1 ">
+                {name}
+              </h2>
+
+              <div className="ml-4 mb-6 mt-auto ">
+                <span className="text-gray-400">{category}</span>
               </div>
-              <div className="p-4 w-1/2 w-full border rounded-md">
-                <table className="min-w-full ">
-                  <thead>
-                    <tr>
-                      <th>Ürün Id</th>
-                      <td>{id}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>Ürün İsim</th>
-                      <td>{name}</td>
-                    </tr>
-                    <tr>
-                      <th>Açıklama</th>
-                      <td>{description}</td>
-                    </tr>
-                    <tr>
-                      <th>Kategori</th>
-                      <td>{category}</td>
-                    </tr>
-                    <tr>
-                      <th>Ürün Fiyat</th>
-                      <td>{price}</td>
-                    </tr>
-                    <tr>
-                      <th>Özet</th>
-                      <td>{features}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="m-4">
+                <span className="text-amber-400 text-4xl ">${price}</span>
+              </div>
+              <div className="m-4">
+                <span className="text-purple-400">{description}</span>
               </div>
             </div>
-            <div className="flex justify-end p-5 space-x-10">
+          </div>
+          <div className="m-4">
+            <div className="p-5 border rounded-md bg-white w-full mx-auto">
+              <span className="text-gray-500">{features}</span>
+            </div>
+          </div>
+          <div className="m-4 flex">
+            <div className="justify-between items-center mx-auto pr-6">
               <button
-                className="bg-emerald-400 hover:bg-emerald-300 rounded-lg w-24"
+                className="bg-green-800 hover:bg-green-700 rounded-md py-2 mr-2 px-4 text-white"
                 type="button"
               >
-                <p className="text-white p-2 ">
-                  <Link href={`/products/${id}/edit`}> Düzenle</Link>
-                </p>
+                <Link href={`/products/${id}/edit`}>Düzenle</Link>
               </button>
               <button
-                className="bg-rose-400 hover:bg-rose-300 rounded-lg w-24"
+                className="bg-rose-800 hover:bg-rose-700 rounded-md py-2 px-4 text-white"
                 type="button"
                 onClick={handleClickDelete}
               >
-                <p className="text-white p-2">Sil</p>
+                Sil
               </button>
             </div>
           </div>
