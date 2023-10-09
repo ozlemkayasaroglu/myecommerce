@@ -26,49 +26,69 @@ export default function ProductLists() {
   }, []);
 
   return (
-    <div className="space-x-4 ">
-      <h1 className="space-x-4 ml-auto bg-amber-400 p-5 text-white text-m ps-5 ">Ürün Listesi</h1>
-      
-      <div className="container mx-auto flex grid-rows-2 justify-between items-center pt-5">
-        
-
+    <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
+      <div className="flex space-x-4 bg-amber-400 ">
+        <h1 className="space-x-4 bg-amber-400 hover:bg-amber-300 p-5">
+          <p className="text-white text-m block uppercase tracking-wide font-bold">
+            Ürün LİSTESİ
+          </p>
+        </h1>
+        </div>
         {loading ? (
           <p>Veriler yükleniyor...</p>
         ) : (
-          <table className="table-auto">
+          <table className="min-w-full bg-gray-100 mb-4 mt-2 ml-1 mr-1">
             <thead>
-              <tr>
-                <th>Ürün id</th>
-                <th>İsim</th>
-                <th>Kategori</th>
-                <th>Price</th>
+              <tr className="bg-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                  Ürün id
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                  İSİM
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                  KATEGORİ
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide">
+                 FİYAT
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {products.map((product) => (
                 <tr key={product.name}>
-                  <td>{product.id}</td>
-                  <td>
-                    <Link
-                      href={`/products/${product.id}`}
-                    >{`${product.name}`}</Link>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
+                      {product.id}
+                    </span>
                   </td>
-                  <td>{product.category}</td>
-                  <td>{product.price}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link href={`/products/${product.id}`}>
+                      <span className="px-2 inline-flex text-sm leading-5 font-semibold rounded-full uppercase tracking-wide text-gray-800">{`${product.name}`}</span>
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
+                      {product.category}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
+                      {product.price}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
 
-<button className="bg-purple-600 hover:bg-purple-500 rounded-lg w-32">
+        <button className="bg-purple-600 hover:bg-purple-500 rounded-lg w-32">
           <Link href={`/products/id/create`}>
             <p className="text-white p-2 ">Yeni Ürün Ekle</p>
           </Link>
         </button>
       </div>
-
-     
-    </div>
+    
   );
 }

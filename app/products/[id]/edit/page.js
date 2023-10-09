@@ -65,7 +65,7 @@ export default function EditProduct({ params }) {
       <div className="flex space-x-4 bg-amber-400 ">
         <h1 className="space-x-4 bg-amber-400 hover:bg-amber-300 p-5">
           <p className="text-white text-m block uppercase tracking-wide font-bold">
-            Ürün Görüntüleme Sayfası
+            Ürün Düzenleme Sayfası
           </p>
         </h1>
       </div>

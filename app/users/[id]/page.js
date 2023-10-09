@@ -18,10 +18,9 @@ export default function ShowUser({ params }) {
     city: "",
   });
   const [company, setCompany] = useState({
-      address: "",
-      city: "",
-      name: "",
-    
+    address: "",
+    city: "",
+    name: "",
   });
 
   useEffect(() => {
@@ -48,8 +47,6 @@ export default function ShowUser({ params }) {
       method: "DELETE",
     });
 
-  
-
     if (!response.ok) {
       throw new Error("Verileri güncellerken bir hata oluştu.");
     }
@@ -58,67 +55,72 @@ export default function ShowUser({ params }) {
   };
 
   return (
-    <div>
-      <h1>Kullanıcı Görüntüleme Sayfası</h1>
+    <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
+      <div className="flex space-x-4 bg-amber-400 ">
+        <h1 className="space-x-4 bg-amber-400 hover:bg-amber-300 p-5">
+          <p className="text-white text-m block uppercase tracking-wide font-bold">
+            Kullanıcı Görüntüleme Sayfası
+          </p>
+        </h1>
+      </div>
       <></>
       {id ? (
-      <>
-          <div>
-            <img src={image} alt="Profil Fotoğrafı" />
+       
+          <><div className="flex">
+          <img
+            className="border rounded-md bg-white m-4 w-1/3"
+            src={image}
+            alt="Ürün Fotoğrafı" />
+          <div className="border rounded-md bg-white m-4 w-2/3 ">
+            <div className="flex flex-col mt-12 items-center justify-center">
+              <h2 className="text-2xl text-gray-600 font-semibold  item-center">
+                {firstName} {lastName}
+              </h2>
+
+              <div className="mt-auto mb-3">
+                <span className="text-gray-400 text-xl ">{email}</span>
+              </div>
+              <div className="text-xl mt-1">
+                <span className="text-amber-400 text-md ">{phone}</span>
+              </div>
+              <div className="text-xl mt-4">
+                <span className="text-gray-400 text-md ">{username}</span>
+              </div>
+            </div>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Kullanıcı ID</th>
-                <th>{id}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>İsim</td>
-                <td>{firstName}</td>
-              </tr>
-              <tr>
-                <td>Soyisim</td>
-                <td>{lastName}</td>
-              </tr>
-              <tr>
-                <td>Kullanıcı Adı:</td>
-                <td>{username}</td>
-              </tr>
-              <tr>
-                <td>Telefon Numarası:</td>
-                <td>{phone}</td>
-              </tr>
-              <tr>
-                <td>Yaş: </td>
-                <td>{age}</td>
-              </tr>
-              <tr>
-                <td>Email: </td>
-                <td>{email}</td>
-              </tr>
-              <tr>
-                <td>Adres</td>
-                <td>{address.address} / {address.city}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td>Şirket/ Firma Adı:</td>
-                <td>{company.name} </td>
-              </tr>
-              <tr>
-                <td>İş Adresi:</td>
-                <td>{company.address} / {company.city}</td>
-              </tr>
-            </tfoot>
-          </table>
-          
-        <button>  <Link href={`/users/${id}/edit`}> Düzenle</Link></button>
-        <button onClick={handleClickDelete}>Sil</button>
-        </>
-         
+        </div><div className="m-4">
+            <div className="p-5 border rounded-md bg-white w-full mx-auto">
+              <span className="text-gray-500">
+                <h3 className="text-gray-600 text-m block uppercase tracking-wide font-semibold p-1">
+                  Ev Adresi:{" "}
+                </h3>
+                {address.address}/{address.city}
+              </span>
+            </div>
+          </div><div className="m-4">
+            <div className="p-5 border rounded-md bg-white w-full mx-auto">
+              <span className="text-gray-500">
+                <h3 className="text-gray-600 text-m block uppercase tracking-wide font-semibold p-1">
+                  İş Adresi:{" "}
+                </h3>
+                {company.address}/{company.city}
+              </span>
+            </div>
+          </div><div className="m-4 flex">
+            <div className="justify-between items-center mx-auto pr-6">
+              <button
+                className="bg-green-800 hover:bg-green-700 rounded-md py-2 mr-2 px-4 text-white"
+                type="button"
+              >
+                <Link href={`/users/${id}/edit`}> Düzenle</Link>
+              </button>
+
+              <button
+                className="bg-rose-800 hover:bg-rose-700 rounded-md py-2 px-4 text-white"
+                type="button" onClick={handleClickDelete}>Sil</button>
+            </div>
+          </div></>
+      
       ) : (
         <div>Kullanıcı Görüntüleme Sayfası Yükleniyor...</div>
       )}
