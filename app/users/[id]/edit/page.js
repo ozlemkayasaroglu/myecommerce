@@ -89,115 +89,185 @@ export default function EditUser({ params }) {
         </h1>
       </div>
       {firstName ? (
-        <form>
-          <div className="my-4 flex items-center space-x-4 ">
-            <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
-              <div className="w-full h-full rounded-full overflow-hidden bg-white">
-                <img
-                  className="w-full h-full object-cover "
-                  src={image}
-                  alt="Profil fotoğrafı"
-                />
+        <>
+          <form>
+            <div className="my-4 flex items-center space-x-4 ">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
+                <div className="w-full h-full rounded-full overflow-hidden bg-white">
+                  <img
+                    className="w-full h-full object-cover "
+                    src={image}
+                    alt="Profil fotoğrafı"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col pl-3">
+                <label className="text-gray-700 text-sm font-bold mb-2">
+                  Profil Fotoğrafı:
+                </label>
+                <div className="flex items-center mr-5">
+                  <input
+                    className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
+                    onChange={(e) => setImage(e.target.value)}
+                    value={image}
+                  />
+                  <button
+                    className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
+                    onClick={handleClickUpdate}
+                  >
+                    Güncelle
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col pl-3">
-              <label className="text-gray-700 text-sm font-bold mb-2">
-                Profil Fotoğrafı:
-              </label>
-              <div className="flex items-center mr-5">
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  First Name:{" "}
+                </label>
                 <input
-                  className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
-                  onChange={(e) => setImage(e.target.value)}
-                  value={image}
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
                 />
-                <button
-                  className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
-                  onClick={handleClickUpdate}
-                >
-                  Güncelle
-                </button>
+              </div>
+
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Last Name:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
+                />
               </div>
             </div>
-          </div>
-          <div className="flex w-full pl-3">
-            <div className="m-4 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold">
-                First Name:{" "}
-              </label>
-              <input
-                className="border-2 border-gray-300 rounded p-2 w-full"
-                onChange={(e) => setFirstName(e.target.value)}
-                value={firstName}
-              />
-              <br />
+
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Kullanıcı Adı:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                />
+              </div>
+              <div className="m-4 w-1/2 ">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Telefon Numarası:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
+                />
+              </div>
             </div>
 
-            <div className="m-4 w-1/2">
-              <label className="block text-gray-700 text-sm font-bold">
-                Last Name:{" "}
-              </label>
-              <input
-                className="border-2 border-gray-300 rounded p-2 w-full"
-                onChange={(e) => setLastName(e.target.value)}
-                value={lastName}
-              />
-              <br />
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  {" "}
+                  Yaş:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setAge(e.target.value)}
+                  value={age}
+                />
+              </div>
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  {" "}
+                  Email{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
+              </div>
             </div>
-          </div>
 
-          <label>Kullanıcı Adı: </label>
-          <input
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          />
-          <br />
-          <label>Telefon Numarası: </label>
-          <input onChange={(e) => setPhone(e.target.value)} value={phone} />
-          <br />
-          <label>Yaş: </label>
-          <input onChange={(e) => setAge(e.target.value)} value={age} />
-          <br />
-          <label>Email </label>
-          <input onChange={(e) => setEmail(e.target.value)} value={email} />
-          <br />
-          <h2>Adres-1 </h2>
-          <label>Mahalle-Sokak: </label>
-          <input
-            onChange={(e) => setAddress(e.target.value)}
-            value={address.address}
-          />
-          <br />
+            <div className="leading-3 leading-normal border-b border-gray-300 mb-4 mt-4"></div>
 
-          <label>Şehir: </label>
-          <input
-            onChange={(e) => setAddress(e.target.value)}
-            value={address.city}
-          />
-          <br />
+            <h2 className="text-gray-400 text-md font-bold uppercase ml-6 ">
+              Adres-1{" "}
+            </h2>
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Mahalle-Sokak:{" "}
+                </label>
+                <textarea
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setAddress(e.target.value)}
+                  value={address.address}
+                />
+              </div>
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Şehir:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setAddress(e.target.value)}
+                  value={address.city}
+                />
+              </div>
+            </div>
 
-          <h2>Adres-2</h2>
-          <label>Şirket Adı: </label>
-          <input
-            onChange={(e) => setCompany(e.target.value)}
-            value={company.name}
-          />
-          <br />
-          <label>Mahalle-Sokak: </label>
-          <input
-            onChange={(e) => setCompany(e.target.value)}
-            value={company.address}
-          />
-          <br />
-          <label>Şehir: </label>
-          <input
-            onChange={(e) => setCompany(e.target.value)}
-            value={company.city}
-          />
-          <br />
+            <h2 className="text-gray-400 text-md font-bold uppercase ml-6 ">
+              Adres-2
+            </h2>
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Mahalle-Sokak:{" "}
+                </label>
+                <textarea
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setCompany(e.target.value)}
+                  value={company.address}
+                />
+              </div>
+              <div className="m-4 w-1/2">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Şehir:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setCompany(e.target.value)}
+                  value={company.city}
+                />
+              </div>
+            </div>
 
-          <button onClick={handleClickUpdate}>Güncelle</button>
-        </form>
+            <div className="flex w-full pl-3">
+              <div className="m-4 w-full">
+                <label className="block text-gray-700 text-sm font-bold">
+                  Şirket Adı:{" "}
+                </label>
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  onChange={(e) => setCompany(e.target.value)}
+                  value={company.name}
+                />
+              </div>
+            </div>
+          </form>
+          <button
+            className="bg-amber-400 hover:bg-amber-300 ml-6 text-white font-bold py-2 px-4 rounded mt-4"
+            onClick={handleClickUpdate}
+          >
+            Güncelle
+          </button>
+        </>
       ) : (
         <div>Kullanıcı Düzenleme Sayfası Yükleniyor...</div>
       )}

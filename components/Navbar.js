@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="bg-slate-50 py-3 ">
       <div className="container mx-auto flex justify-between items-center">
        
-        <div className="flex-none">
+        <div className="flex-none ml-8 mt-5 mb-3">
         <Link href="/">
         <Image
           className="logo"
@@ -21,7 +21,7 @@ const Navbar = () => {
         </Link>
         </div>
 
-        <div className="flex-none space-x-4 ml-auto">
+        <div className="flex-none space-x-4 ml-auto mr-8 mt-5 mb-3">
           <button href="#" className="bg-purple-600 hover:bg-purple-500 rounded-lg w-24">
             <p className="text-white p-2 ">
               <Link href="../users/create/">
