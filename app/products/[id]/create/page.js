@@ -32,7 +32,7 @@ export default function CreateProduct() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3002/products", {
+      const response = await fetch("http://localhost:3001/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

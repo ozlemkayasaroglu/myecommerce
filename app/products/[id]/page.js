@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import ProductData from "@/components/ProductData";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ShowProduct({ params }) {
   const [products, setProducts] = useState([]);
@@ -29,7 +30,7 @@ export default function ShowProduct({ params }) {
 
   const handleClickDelete = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3002/products/${id}`, {
+    const response = await fetch(`http://localhost:3001/products/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {
@@ -52,11 +53,13 @@ export default function ShowProduct({ params }) {
       {id ? (
         <>
           <div className="flex">
-            <img
+            <Image
               className="border rounded-md bg-white m-4 w-1/3"
               src={image}
+              width={300}
+              height={300}
               alt="Ürün Fotoğrafı"
-            />
+            ></Image>
             <div className="border rounded-md bg-white m-4 w-2/3">
               <h2 className="text-3xl text-gray-600 font-semibold m-4 mt-12 mb-1 ">
                 {name}

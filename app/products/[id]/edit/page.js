@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProductData from "@/components/ProductData";
+import Image from "next/image";
+
 
 export default function EditProduct({ params }) {
   const [name, setName] = useState("");
@@ -42,7 +44,7 @@ export default function EditProduct({ params }) {
         features: features,
       };
 
-      const response = await fetch(`http://localhost:3002/products/${id}`, {
+      const response = await fetch(`http://localhost:3001/products/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -75,11 +77,13 @@ export default function EditProduct({ params }) {
             <div className="my-4 flex items-center space-x-4 ">
               <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
                 <div className="w-full h-full rounded-full overflow-hidden bg-white">
-                  <img
+                  <Image
                     className="w-full h-full object-cover "
                     src={image}
+                    width={300}
+                    height={300}
                     alt="Ürün fotoğrafı"
-                  />
+                  ></Image>
                 </div>
               </div>
 

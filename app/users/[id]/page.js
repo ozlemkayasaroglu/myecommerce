@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ShowUser({ params }) {
   const [users, setUsers] = useState([]);
@@ -67,10 +68,12 @@ export default function ShowUser({ params }) {
       {id ? (
        
           <><div className="flex">
-          <img
+          <Image
             className="border rounded-md bg-white m-4 w-1/3"
             src={image}
-            alt="Ürün Fotoğrafı" />
+            width={300}
+      height={300}
+            alt="Ürün Fotoğrafı"></Image>
           <div className="border rounded-md bg-white m-4 w-2/3 ">
             <div className="flex flex-col mt-12 items-center justify-center">
               <h2 className="text-2xl text-gray-600 font-semibold  item-center">

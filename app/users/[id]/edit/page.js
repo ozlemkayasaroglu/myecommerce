@@ -94,11 +94,13 @@ export default function EditUser({ params }) {
             <div className="my-4 flex items-center space-x-4 ">
               <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
                 <div className="w-full h-full rounded-full overflow-hidden bg-white">
-                  <img
+                  <Image
                     className="w-full h-full object-cover "
                     src={image}
+                    width={300}
+                    height={300}
                     alt="Profil fotoğrafı"
-                  />
+                  ></Image>
                 </div>
               </div>
 

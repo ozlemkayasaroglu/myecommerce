@@ -1,6 +1,6 @@
 export default async function ProductData(id) {
     const res = await fetch(
-        `http://localhost:3002/products?id=${id}`
+        `http://localhost:3001/products?id=${id}`
       );
   
    if (!res.ok) {
