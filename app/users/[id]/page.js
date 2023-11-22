@@ -27,21 +27,22 @@ export default function ShowUser({ params }) {
   useEffect(() => {
     async function fetchData() {
       const data = await UserData(params.id);
-      setUsers(data[0]);
-      setId(data[0].id);
-      setImage(data[0].image);
-      setFirstName(data[0].firstName);
-      setLastName(data[0].lastName);
-      setUsername(data[0].username);
-      setPhone(data[0].phone);
-      setAge(data[0].age);
-      setEmail(data[0].email);
-      setAddress(data[0].address);
-      setCompany(data[0].company);
+      setUsers(data);
+      setId(data.id);
+      setImage(data.image);
+      setFirstName(data.firstName);
+      setLastName(data.lastName);
+      setUsername(data.username);
+      setPhone(data.phone);
+      setAge(data.age);
+      setEmail(data.email);
+      setAddress(data.address);
+      setCompany(data.company);
     }
     fetchData();
   }, []);
 
+  console.log(users);
   const handleClickDelete = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:3001/users/${id}`, {

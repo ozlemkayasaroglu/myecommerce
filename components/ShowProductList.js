@@ -11,15 +11,15 @@ export default function ShowProductList() {
     async function fetchData() {
       const response = await fetch("http://localhost:3001/products");
       const data = await response.json();
-      setProducts(data.products);
+      setProducts(data);
     }
     fetchData();
   }, []);
 
+ 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {products.slice(0, 20).map((product) => (
-        //.slice(0, 20) bunu sildim yukarıdan
         <div key={product.id} className="border rounded p-4">
           <Link href={`/products/${product.id}`}>
             <div className="aspect-w-1 aspect-h-1">

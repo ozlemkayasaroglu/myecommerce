@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function ShowProduct({ params }) {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -17,20 +17,22 @@ export default function ShowProduct({ params }) {
   useEffect(() => {
     async function fetchData() {
       const data = await ProductData(params.id);
-      setId(data[0].id);
-      setName(data[0].name);
-      setCategory(data[0].category);
-      setImage(data[0].image);
-      setPrice(data[0].price);
-      setDescription(data[0].description);
-      setFeatures(data[0].features);
+      setId(data.id);
+      setName(data.name);
+      setCategory(data.category);
+      setImage(data.image);
+      setPrice(data.price);
+      setDescription(data.description);
+      setFeatures(data.features);
     }
     fetchData();
   }, []);
 
   const handleClickDelete = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3001/products/${id}`, {
+
+    console.log()
+    const response = await fetch(`http://localhost:3001/product/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {

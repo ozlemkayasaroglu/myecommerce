@@ -32,7 +32,7 @@ export default function CreateProduct() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/products", {
+      const response = await fetch(`http://localhost:3001/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,15 +86,15 @@ export default function CreateProduct() {
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-first-name"
+                htmlFor="grid-name"
               >
                 İSİM:
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
+                id="grid-name"
                 type="text"
-                name="firstName"
+                name="name"
                 value={createProduct.name}
                 onChange={handleChange}
               />
@@ -103,15 +103,15 @@ export default function CreateProduct() {
             <div className="md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-last-name"
+                htmlFor="grid-category-name"
               >
                 KATEGORİ:
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-last-name"
+                id="grid-category-name"
                 type="text"
-                name="lastName"
+                name="category"
                 value={createProduct.category}
                 onChange={handleChange}
               />
@@ -121,16 +121,16 @@ export default function CreateProduct() {
             <div className="md:w-full px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-username"
+                htmlFor="grid-features"
               >
             özet:
               </label>
               <textarea
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-username"
+                id="grid-features"
                 type="text"
-                name="username"
-                value={createProduct.price}
+                name="features"
+                value={createProduct.features}
                 onChange={handleChange}
               />
             </div>
@@ -139,16 +139,16 @@ export default function CreateProduct() {
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-first-name"
+                htmlFor="grid-price"
               >
                 FİYAT:
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
+                id="grid-price"
                 type="text"
-                name="firstName"
-                value={createProduct.name}
+                name="price"
+                value={createProduct.price}
                 onChange={handleChange}
               />
             </div>
@@ -156,16 +156,16 @@ export default function CreateProduct() {
             <div className="md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-last-name"
+                htmlFor="grid-description"
               >
                 AÇIKLAMA:
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-last-name"
+                id="grid-description"
                 type="text"
-                name="lastName"
-                value={createProduct.category}
+                name="description"
+                value={createProduct.description}
                 onChange={handleChange}
               />
             </div>

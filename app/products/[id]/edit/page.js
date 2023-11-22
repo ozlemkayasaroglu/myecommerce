@@ -17,13 +17,13 @@ export default function EditProduct({ params }) {
     async function fetchData() {
       try {
         const data = await ProductData(params.id);
-        setId(data[0].id);
-        setName(data[0].name);
-        setCategory(data[0].category);
-        setImage(data[0].image);
-        setPrice(data[0].price);
-        setDescription(data[0].description);
-        setFeatures(data[0].features);
+        setId(data.id);
+        setName(data.name);
+        setCategory(data.category);
+        setImage(data.image);
+        setPrice(data.price);
+        setDescription(data.description);
+        setFeatures(data.features);
       } catch (error) {
         console.error("veri getirme hatası:", error.message);
       }
@@ -44,7 +44,7 @@ export default function EditProduct({ params }) {
         features: features,
       };
 
-      const response = await fetch(`http://localhost:3001/products/${id}`, {
+      const response = await fetch(`http://localhost:3001/product/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
