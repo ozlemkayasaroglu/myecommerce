@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 
 export default function EditUser({ params }) {
   const [id, setId] = useState("");

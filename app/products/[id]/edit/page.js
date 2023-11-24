@@ -2,7 +2,11 @@
 import { useEffect, useState } from "react";
 import ProductData from "@/components/ProductData";
 import Image from "next/image";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
+
+const MySwal = withReactContent(Swal);
 
 export default function EditProduct({ params }) {
   const [name, setName] = useState("");
@@ -12,6 +16,7 @@ export default function EditProduct({ params }) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [features, setFeatures] = useState("");
+
 
   useEffect(() => {
     async function fetchData() {
@@ -43,7 +48,7 @@ export default function EditProduct({ params }) {
         description: description,
         features: features,
       };
-
+  
       const response = await fetch(`http://localhost:3001/product/${id}`, {
         method: "PUT",
         headers: {
@@ -53,11 +58,33 @@ export default function EditProduct({ params }) {
       });
 
       if (!response.ok) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Hata!',
+          text: 'Ürün güncelleme başarısız.',
+        });
         throw new Error("Ürünleri güncellerken bir hata oluştu.");
+      
+       
       }
+      MySwal.fire({
+        icon: 'success',
+        title: 'Ürün Güncellendi!',
+        text: 'Ürün başarıyla güncellendi.',
+      });
+
       const updatedProducts = await response.json();
       console.log("Ürünler başarıyla güncellendi:", updatedProducts);
+  
+
+
     } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Hata!',
+        text: 'Ürün güncelleme başarısız.',
+      });
+
       console.log(error.message);
     }
   };

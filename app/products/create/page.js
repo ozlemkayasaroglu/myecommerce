@@ -1,5 +1,9 @@
 "use client";
 import { useState } from "react";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function CreateProduct() {
   const [createProduct, setCreateProduct] = useState({
@@ -17,7 +21,11 @@ export default function CreateProduct() {
 
     if (name === "price") {
       if (!/^[0-9]+$/.test(value)) {
-        alert(`Lütfen sadece numaralardan oluşan bir değer girin.`);
+        Swal.fire({
+          icon: 'error',
+          title: 'Hata!',
+          text: 'Sadece sayı giriniz.',
+        });
         return;
       }
     }
@@ -41,11 +49,24 @@ export default function CreateProduct() {
       });
 
       if (!response.ok) {
-        throw new Error("Ürün kaydı sırasında hata oluştu.");
-      }
 
+        throw new Error("Ürün kaydı başarılı");
+      }
+      MySwal.fire({
+        icon: 'success',
+        title: 'Ürün başarıyla kaydedildi!',
+        text: 'Ürün başarıyla kaydedildi.',
+      });
       console.log("Ürün başarıyla kaydedildi.");
+
     } catch (error) {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Hata!',
+        text: 'Ürün kaydı başarısız.',
+      });
+
       console.log("Hata oluştu:", error);
     }
   };

@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import ProductData from "@/components/ProductData";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function ShowProduct({ params }) {
   // const [products, setProducts] = useState([]);
@@ -36,10 +40,21 @@ export default function ShowProduct({ params }) {
       method: "DELETE",
     });
     if (!response.ok) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Hata!',
+        text: 'Ürün güncelleme başarısız.',
+      });
       throw new Error("Verileri güncellerken bir hata oluştu.");
     }
     const deletedUser = await response.json();
+    MySwal.fire({
+      icon: 'success',
+      title: 'Ürün Silindi!',
+      text: 'Ürün başarıyla silindi',
+    });
     console.log("Veriler başarıyla güncellendi:", deletedUser);
+   
   };
 
   return (
