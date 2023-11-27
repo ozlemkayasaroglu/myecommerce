@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import UserData from "@/components/UserData";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
-
 
 export default function EditUser({ params }) {
   const [id, setId] = useState("");
@@ -21,6 +21,8 @@ export default function EditUser({ params }) {
     city: "",
   });
 
+  // const [city, setCity] = useState("");
+
   const [company, setCompany] = useState({
     address: "",
     city: "",
@@ -29,23 +31,30 @@ export default function EditUser({ params }) {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await UserData(params.id);
-      setId(data[0].id);
-      setImage(data[0].image);
-      setFirstName(data[0].firstName);
-      setLastName(data[0].lastName);
-      setUsername(data[0].username);
-      setPhone(data[0].phone);
-      setAge(data[0].age);
-      setEmail(data[0].email);
-      setAddress(data[0].address);
-      setCompany(data[0].company);
+      try {
+        const data = await UserData(params.id);
+
+        setId(data.id);
+        setImage(data.image);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setUsername(data.username);
+        setPhone(data.phone);
+        setAge(data.age);
+        setEmail(data.email);
+        setAddress(data.address);
+        setCompany(data.company);
+        // setCity(data.city);
+      } catch (error) {
+        console.error("veri getirme hatası", error);
+      }
     }
     fetchData();
   }, [id]);
 
   const handleClickUpdate = async (e) => {
     e.preventDefault();
+
     try {
       const dataToUpdate = {
         image: image,
@@ -60,9 +69,9 @@ export default function EditUser({ params }) {
           city: city,
         },
         company: {
+          name: name,
           address: address,
           city: city,
-          name: name,
         },
       };
 
@@ -75,11 +84,26 @@ export default function EditUser({ params }) {
       });
 
       if (!response.ok) {
+        Swal.fire({
+          icon: "error",
+          title: "Hata!",
+          text: "Ürün güncelleme başarısız.",
+        });
         throw new Error("Verileri güncellerken bir hata oluştu.");
       }
+      MySwal.fire({
+        icon: "success",
+        title: "Ürün Güncellendi!",
+        text: "Ürün başarıyla güncellendi.",
+      });
       const updatedData = await response.json();
       console.log("Veriler başarıyla güncellendi:", updatedData);
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Hata!",
+        text: "Ürün güncelleme başarısız.",
+      });
       console.error(error.message);
     }
   };

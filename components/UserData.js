@@ -1,6 +1,6 @@
 export default async function UserData(id) {
     const res = await fetch(
-        `http://localhost:3001/users?id=${id}`
+       `http://localhost:3001/users/${id}`
       );
   
    if (!res.ok) {

@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import UserData from "@/components/UserData";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function ShowUser({ params }) {
   const [users, setUsers] = useState([]);
@@ -12,7 +16,6 @@ export default function ShowUser({ params }) {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
-  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState({
     address: "",
@@ -23,26 +26,29 @@ export default function ShowUser({ params }) {
     city: "",
     name: "",
   });
+  
+
 
   useEffect(() => {
     async function fetchData() {
       const data = await UserData(params.id);
-      setUsers(data);
+      setUsers(data.users);
       setId(data.id);
       setImage(data.image);
       setFirstName(data.firstName);
       setLastName(data.lastName);
       setUsername(data.username);
       setPhone(data.phone);
-      setAge(data.age);
       setEmail(data.email);
       setAddress(data.address);
       setCompany(data.company);
+      
     }
     fetchData();
-  }, []);
+    
+  }, [id]);
 
-  console.log(users);
+  
   const handleClickDelete = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:3001/users/${id}`, {
@@ -50,9 +56,19 @@ export default function ShowUser({ params }) {
     });
 
     if (!response.ok) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Hata!',
+        text: 'Kullanıcı silme işlemi başarısız.',
+      });
       throw new Error("Verileri güncellerken bir hata oluştu.");
     }
     const deletedUser = await response.json();
+    MySwal.fire({
+      icon: 'success',
+      title: 'Kullanıcı silindi!',
+      text: 'Kullanıcı başarıyla silindi.',
+    });
     console.log("Veriler başarıyla güncellendi:", deletedUser);
   };
 
