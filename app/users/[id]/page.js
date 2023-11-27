@@ -40,14 +40,21 @@ export default function ShowUser({ params }) {
       setUsername(data.username);
       setPhone(data.phone);
       setEmail(data.email);
-      setAddress(data.address);
-      setCompany(data.company);
+      setAddress({
+        address: data.address.address,
+        city: data.address.city
+      });
+      setCompany({
+        address: data.company.address,
+        city: data.company.city,
+        name: data.company.name
+      });
       
     }
     fetchData();
     
   }, [id]);
-
+  console.log({company})
   
   const handleClickDelete = async (e) => {
     e.preventDefault();

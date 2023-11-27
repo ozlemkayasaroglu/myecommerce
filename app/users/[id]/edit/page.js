@@ -42,9 +42,15 @@ export default function EditUser({ params }) {
         setPhone(data.phone);
         setAge(data.age);
         setEmail(data.email);
-        setAddress(data.address);
-        setCompany(data.company);
-        // setCity(data.city);
+        setAddress({
+          address: data.address.address,
+          city: data.address.city
+        });
+        setCompany({
+          address: data.company.address,
+          city: data.company.city,
+          name: data.company.name
+        });
       } catch (error) {
         console.error("veri getirme hatası", error);
       }
@@ -65,13 +71,13 @@ export default function EditUser({ params }) {
         age: age,
         email: email,
         address: {
-          address: address,
-          city: city,
+          address: address.address,
+          city: address.city,
         },
         company: {
-          name: name,
-          address: address,
-          city: city,
+          name: company.name,
+          address: company.address,
+          city: company.city,
         },
       };
 
