@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import {useRouter} from 'next/router';
 
 const MySwal = withReactContent(Swal);
 
@@ -53,6 +54,12 @@ export default function ShowProduct({ params }) {
       title: 'Ürün Silindi!',
       text: 'Ürün başarıyla silindi',
     });
+
+
+    const router = useRouter();
+    router.push('/users/page.js');
+
+    
     console.log("Veriler başarıyla güncellendi:", deletedUser);
    
   };

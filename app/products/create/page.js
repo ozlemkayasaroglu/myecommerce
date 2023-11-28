@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useRouter } from "next/router";
+import {useForm} from 'react-hook-form'
 
 const MySwal = withReactContent(Swal);
 
@@ -19,15 +21,14 @@ export default function CreateProduct() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
-      if (!/^[0-9]+$/.test(value)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Hata!',
-          text: 'Sadece sayı giriniz.',
-        });
-        return;
-      }
+    if (name === "price" && isNaN(value)) {
+      // Eğer değer sayı değilse
+      Swal.fire({
+        icon: "error",
+        title: "Hata!",
+        text: "Sadece sayı giriniz.",
+      });
+      return;
     }
 
     setCreateProduct((prevProduct) => ({
@@ -49,27 +50,31 @@ export default function CreateProduct() {
       });
 
       if (!response.ok) {
-
         throw new Error("Ürün kaydı başarılı");
       }
       MySwal.fire({
-        icon: 'success',
-        title: 'Ürün başarıyla kaydedildi!',
-        text: 'Ürün başarıyla kaydedildi.',
+        icon: "success",
+        title: "Ürün başarıyla kaydedildi!",
+        text: "Ürün başarıyla kaydedildi.",
       });
+
+      const router = useRouter();
+      router.push("/");
+
       console.log("Ürün başarıyla kaydedildi.");
-
     } catch (error) {
-
       Swal.fire({
-        icon: 'error',
-        title: 'Hata!',
-        text: 'Ürün kaydı başarısız.',
+        icon: "error",
+        title: "Hata!",
+        text: "Ürün kaydı başarısız.",
       });
 
       console.log("Hata oluştu:", error);
     }
   };
+
+  const {register, onSubmit, watch, formState: {errors}} =useForm();
+  const serviceSend = data => console.log(data);
 
   return (
     <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
@@ -82,25 +87,28 @@ export default function CreateProduct() {
       </div>
 
       <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
-        <form className="flex items-center space-x-6 pb-4">
+
+
+        <form  onSubmit = {handleSubmit(serviceSend)} >
+          <div className="flex items-center space-x-6 pb-4">
           <div className="flex p-2 w-full ">
             <label className="block w-80 uppercase tracking-wide text-sm font-bold text-gray-700 mt-2">
               ÜRÜN FOTOĞRAFI:
             </label>
-            
-              <input
-                className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
-                placeholder=" Dosya linki eklenmedi"
-              ></input>
-           
+
+            <input
+              className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
+              placeholder=" Dosya linki eklenmedi"
+            ></input>
           </div>
+
           <button
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             className="px-8 py-3 text-sm font-semibold text-white bg-amber-300 hover:bg-amber-300 rounded-md rounded-md "
           >
             Yükle
           </button>
-        </form>
+      </div>
 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col pt-5">
           <div className="-mx-3 md:flex mb-6">
@@ -116,11 +124,11 @@ export default function CreateProduct() {
                 id="grid-name"
                 type="text"
                 name="name"
-                value={createProduct.name}
-                onChange={handleChange}
+                defaultValue={createProduct.name}
+              {...register("name")}
               />
             </div>
-            
+
             <div className="md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -133,8 +141,8 @@ export default function CreateProduct() {
                 id="grid-category-name"
                 type="text"
                 name="category"
-                value={createProduct.category}
-                onChange={handleChange}
+                defaultValue={createProduct.category}
+               {...register("category")}
               />
             </div>
           </div>
@@ -144,15 +152,15 @@ export default function CreateProduct() {
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-features"
               >
-            özet:
+                özet:
               </label>
               <textarea
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-features"
                 type="text"
                 name="features"
-                value={createProduct.features}
-                onChange={handleChange}
+                defaultValue={createProduct.features}
+                {...register ("features")}
               />
             </div>
           </div>
@@ -167,13 +175,14 @@ export default function CreateProduct() {
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                 id="grid-price"
-                type="text"
+                type="number"
+                
                 name="price"
-                value={createProduct.price}
-                onChange={handleChange}
+                defaultValue={createProduct.price}
+                {...register("price")}
               />
             </div>
-            
+
             <div className="md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -186,12 +195,12 @@ export default function CreateProduct() {
                 id="grid-description"
                 type="text"
                 name="description"
-                value={createProduct.description}
-                onChange={handleChange}
+                defaultValue={createProduct.description}
+                {...register("description")}
               />
             </div>
-            </div>
-          
+          </div>
+
           <div className="flex items-center justify-between pt-4">
             <button
               className="px-5 py-3 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500 rounded-md rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 "
@@ -202,8 +211,8 @@ export default function CreateProduct() {
             </button>
           </div>
         </div>
+        </form>
       </div>
-
     </div>
   );
 }

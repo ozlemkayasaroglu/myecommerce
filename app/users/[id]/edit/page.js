@@ -4,6 +4,7 @@ import Image from "next/image";
 import UserData from "@/components/UserData";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import {useRouter} from 'next/router';
 
 const MySwal = withReactContent(Swal);
 
@@ -103,7 +104,15 @@ export default function EditUser({ params }) {
         text: "Ürün başarıyla güncellendi.",
       });
       const updatedData = await response.json();
+
+      const router = useRouter();
+      router.push('/users/page.js');
+      
+      
       console.log("Veriler başarıyla güncellendi:", updatedData);
+
+
+
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -202,6 +211,7 @@ export default function EditUser({ params }) {
                   className="border-2 border-gray-300 rounded p-2 w-full"
                   onChange={(e) => setPhone(e.target.value)}
                   value={phone}
+                  type="number"
                 />
               </div>
             </div>
@@ -216,6 +226,7 @@ export default function EditUser({ params }) {
                   className="border-2 border-gray-300 rounded p-2 w-full"
                   onChange={(e) => setAge(e.target.value)}
                   value={age}
+                  type="number"
                 />
               </div>
               <div className="m-4 w-1/2">

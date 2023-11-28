@@ -5,8 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import {useRouter} from 'next/router';
 
 const MySwal = withReactContent(Swal);
+
+
 
 export default function ShowUser({ params }) {
   const [users, setUsers] = useState([]);
@@ -54,8 +57,8 @@ export default function ShowUser({ params }) {
     fetchData();
     
   }, [id]);
-  console.log({company})
   
+
   const handleClickDelete = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:3001/users/${id}`, {
@@ -71,11 +74,18 @@ export default function ShowUser({ params }) {
       throw new Error("Verileri güncellerken bir hata oluştu.");
     }
     const deletedUser = await response.json();
+   
     MySwal.fire({
       icon: 'success',
       title: 'Kullanıcı silindi!',
       text: 'Kullanıcı başarıyla silindi.',
     });
+    const router = useRouter();
+    router.push('/users/page.js');
+
+
+    //USEROUTER YOLUNDA HATA VAR
+    
     console.log("Veriler başarıyla güncellendi:", deletedUser);
   };
 

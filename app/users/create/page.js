@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import {useRouter} from "next/router";
 
 const MySwal = withReactContent(Swal);
 
@@ -30,7 +31,7 @@ export default function CreateUser() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "phone" || name === "age") {
+    if (name == "phone" || name == "age") {
       if (!/^[0-9]+$/.test(value)) {
         Swal.fire({
           icon: 'error',
@@ -39,6 +40,7 @@ export default function CreateUser() {
         });
         return;
       }
+      
     }
 
     setCreateUser((prevCreateUser) => {
@@ -89,6 +91,10 @@ export default function CreateUser() {
         title: 'Ürün başarıyla kaydedildi!',
         text: 'Ürün başarıyla kaydedildi.',
       });
+
+      const router = useRouter();
+      router.push('/');
+
 
       console.log("Kullanıcı başarıyla kaydedildi.");
     } catch (error) {
@@ -196,7 +202,7 @@ export default function CreateUser() {
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-phone"
-                type="text"
+                type="number"
                 name="phone"
                 value={createUser.phone}
                 onChange={handleChange}
@@ -212,7 +218,7 @@ export default function CreateUser() {
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-age"
-                type="text"
+                type="number"
                 name="age"
                 value={createUser.age}
                 onChange={handleChange}

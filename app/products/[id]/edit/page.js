@@ -4,6 +4,8 @@ import ProductData from "@/components/ProductData";
 import Image from "next/image";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import {useRouter} from 'next/router';
+import {useForm} from 'react-hook-form';
 
 
 const MySwal = withReactContent(Swal);
@@ -17,7 +19,7 @@ export default function EditProduct({ params }) {
   const [description, setDescription] = useState("");
   const [features, setFeatures] = useState("");
 
-
+ 
   useEffect(() => {
     async function fetchData() {
       try {
@@ -73,6 +75,9 @@ export default function EditProduct({ params }) {
         text: 'Ürün başarıyla güncellendi.',
       });
 
+      const router = useRouter();
+      router.push('/');
+
       const updatedProducts = await response.json();
       console.log("Ürünler başarıyla güncellendi:", updatedProducts);
   
@@ -89,6 +94,15 @@ export default function EditProduct({ params }) {
     }
   };
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: {errors}
+      } =useForm();
+    
+      const serviceSend = data => console.log(data);
+
   return (
     <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
       <div className="flex space-x-4 bg-amber-400 ">
@@ -100,7 +114,7 @@ export default function EditProduct({ params }) {
       </div>
       {name ? (
         <>
-          <form>
+          <form onSubmit={handleSubmit(serviceSend)}>
             <div className="my-4 flex items-center space-x-4 ">
               <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
                 <div className="w-full h-full rounded-full overflow-hidden bg-white">
@@ -119,10 +133,12 @@ export default function EditProduct({ params }) {
                   Ürün Görseli:
                 </label>
                 <div className="flex items-center mr-5">
-                  <input
+                  {errors.image && <span>Bu alan zorunludur</span>}
+                  <input {...register("image",{required: true})}
+                   defaultValue={image}
                     className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
-                    onChange={(e) => setImage(e.target.value)}
-                    value={image}
+                    // onChange={(e) => setImage(e.target.value)}
+                    // value={image}
                   />
                   <button
                     className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
@@ -167,6 +183,8 @@ export default function EditProduct({ params }) {
               <input
                 className="border-2 border-gray-300 rounded p-2 w-full"
                 onChange={(e) => setPrice(e.target.value)}
+                type="number"
+               
                 value={price}
               />
               <br />
@@ -198,13 +216,16 @@ export default function EditProduct({ params }) {
               />
               <br />
             </div>
-          </form>
+          
           <button
             className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={handleClickUpdate}
+            /* onClick={handleClickUpdate} */
+            type="submit"
           >
+          
             Güncelle
           </button>
+          </form>
         </>
       ) : (
         <div>Kullanıcı Düzenleme Sayfası Yükleniyor...</div>
