@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import {useRouter} from "next/router";
+import {useForm} from "react-hook-form";
 
 const MySwal = withReactContent(Swal);
 
@@ -71,8 +71,11 @@ export default function CreateUser() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  const {register, handleSubmit, formState: {error}} = useForm();
+
+  const onSubmit = async (data) => {
+  console.log(data);
 
     try {
       const response = await fetch("http://localhost:3001/users", {
@@ -91,9 +94,6 @@ export default function CreateUser() {
         title: 'Ürün başarıyla kaydedildi!',
         text: 'Ürün başarıyla kaydedildi.',
       });
-
-      const router = useRouter();
-      router.push('/');
 
 
       console.log("Kullanıcı başarıyla kaydedildi.");
@@ -118,7 +118,7 @@ export default function CreateUser() {
       </div>
 
       <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
-        <form className="flex items-center space-x-6 pb-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center space-x-6 pb-4">
           <div className="flex p-2 w-full ">
             <label className="block w-80 uppercase tracking-wide text-sm font-bold text-gray-700 mt-2">
               PROFİL FOTOĞRAFI:
@@ -131,8 +131,8 @@ export default function CreateUser() {
            
           </div>
           <button
-            onClick={handleSubmit}
-            className="px-8 py-3 text-sm font-semibold text-white bg-amber-300 hover:bg-amber-300 rounded-md rounded-md "
+    
+            className="px-8 py-3 text-sm font-semibold text-white bg-amber-300 hover:bg-amber-300 rounded-md rounded-md " type="submit"
           >
             Yükle
           </button>
@@ -152,8 +152,8 @@ export default function CreateUser() {
                 id="grid-first-name"
                 type="text"
                 name="firstName"
-                value={createUser.firstName}
-                onChange={handleChange}
+                defaultValue={createUser.firstName}
+                {...register("firtsName")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -169,7 +169,7 @@ export default function CreateUser() {
                 type="text"
                 name="lastName"
                 value={createUser.lastName}
-                onChange={handleChange}
+                {...register("lastName")}
               />
             </div>
           </div>
@@ -186,8 +186,8 @@ export default function CreateUser() {
                 id="grid-username"
                 type="text"
                 name="username"
-                value={createUser.username}
-                onChange={handleChange}
+                defaultValue={createUser.username}
+                {...register("username")}
               />
             </div>
           </div>
@@ -204,8 +204,8 @@ export default function CreateUser() {
                 id="grid-phone"
                 type="number"
                 name="phone"
-                value={createUser.phone}
-                onChange={handleChange}
+                defaultValue={createUser.phone}
+{...register("phone")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -220,8 +220,8 @@ export default function CreateUser() {
                 id="grid-age"
                 type="number"
                 name="age"
-                value={createUser.age}
-                onChange={handleChange}
+                defaultValue={createUser.age}
+                {...register("age")}
               />
             </div>
           </div>
@@ -238,8 +238,8 @@ export default function CreateUser() {
                 id="grid-email"
                 type="text"
                 name="email"
-                value={createUser.email}
-                onChange={handleChange}
+                defaultValue={createUser.email}
+                {...register ("email")}
               />
             </div>
           </div>
@@ -256,8 +256,8 @@ export default function CreateUser() {
                 id="grid-address"
                 type="text"
                 name="address.address"
-                value={createUser.address.address}
-                onChange={handleChange}
+                defaultValue={createUser.address.address}
+                {...register("address")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -272,8 +272,8 @@ export default function CreateUser() {
                 id="grid-city"
                 type="text"
                 name="address.city"
-                value={createUser.address.city}
-                onChange={handleChange}
+                defaultValue={createUser.address.city}
+                {...register("city")}
               />
             </div>
           </div>
@@ -290,8 +290,8 @@ export default function CreateUser() {
                 id="grid-company-name"
                 type="text"
                 name="company.name"
-                value={createUser.company.name}
-                onChange={handleChange}
+                defaultValue={createUser.company.name}
+                {...register("company.name")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -306,8 +306,8 @@ export default function CreateUser() {
                 id="grid-company-address"
                 type="text"
                 name="company.address"
-                value={createUser.company.address}
-                onChange={handleChange}
+                defaultValue={createUser.company.address}
+                {...register("company.address")}
               />
             </div>
           </div>
@@ -324,16 +324,16 @@ export default function CreateUser() {
                 id="grid-company-city"
                 type="text"
                 name="company.city"
-                value={createUser.company.city}
-                onChange={handleChange}
+                defaultValue={createUser.company.city}
+                {...register("company.city")}
               />
             </div>
           </div>
           <div className="flex items-center justify-between pt-4">
             <button
               className="px-5 py-3 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500 rounded-md rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 "
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
+             
             >
               Gönder
             </button>

@@ -4,7 +4,7 @@ import ProductData from "@/components/ProductData";
 import Image from "next/image";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import {useRouter} from 'next/router';
+
 import {useForm} from 'react-hook-form';
 
 
@@ -38,7 +38,16 @@ export default function EditProduct({ params }) {
     fetchData();
   }, [params.id]);
 
-  const handleClickUpdate = async (e) => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors}
+      } =useForm();
+    
+
+
+  const onSubmit = async (data) => {
     e.preventDefault();
     try {
       const productToUpdate = {
@@ -75,8 +84,6 @@ export default function EditProduct({ params }) {
         text: 'Ürün başarıyla güncellendi.',
       });
 
-      const router = useRouter();
-      router.push('/');
 
       const updatedProducts = await response.json();
       console.log("Ürünler başarıyla güncellendi:", updatedProducts);
@@ -94,15 +101,7 @@ export default function EditProduct({ params }) {
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: {errors}
-      } =useForm();
-    
-      const serviceSend = data => console.log(data);
-
+  
   return (
     <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
       <div className="flex space-x-4 bg-amber-400 ">
@@ -142,7 +141,7 @@ export default function EditProduct({ params }) {
                   />
                   <button
                     className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
-                    onClick={handleClickUpdate}
+                    // onClick={handleClickUpdate}
                   >
                     Güncelle
                   </button>
