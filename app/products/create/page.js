@@ -96,6 +96,8 @@ export default function CreateProduct() {
               <input
                 className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
                 placeholder=" Dosya linki eklenmedi"
+                defaultValue={createProduct.image}
+                {...register("image")}
               ></input>
             </div>
 
