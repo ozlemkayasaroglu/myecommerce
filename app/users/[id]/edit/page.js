@@ -4,31 +4,32 @@ import Image from "next/image";
 import UserData from "@/components/UserData";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import {useRouter} from 'next/router';
-
+import { useForm } from "react-hook-form";
 const MySwal = withReactContent(Swal);
 
 export default function EditUser({ params }) {
+  const { register, handleSubmit, setValue } = useForm();
+
+  const [user, setUser] = useState(null);
   const [id, setId] = useState("");
-  const [image, setImage] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState({
-    address: "",
-    city: "",
-  });
 
-  // const [city, setCity] = useState("");
+  // const [image, setImage] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [age, setAge] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [address, setAddress] = useState({
+  //   address: "",
+  //   city: "",
+  // });
 
-  const [company, setCompany] = useState({
-    address: "",
-    city: "",
-    name: "",
-  });
+  // const [company, setCompany] = useState({
+  //   address: "",
+  //   city: "",
+  //   name: "",
+  // });
 
   useEffect(() => {
     async function fetchData() {
@@ -36,58 +37,116 @@ export default function EditUser({ params }) {
         const data = await UserData(params.id);
 
         setId(data.id);
-        setImage(data.image);
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setUsername(data.username);
-        setPhone(data.phone);
-        setAge(data.age);
-        setEmail(data.email);
-        setAddress({
-          address: data.address.address,
-          city: data.address.city
-        });
-        setCompany({
-          address: data.company.address,
-          city: data.company.city,
-          name: data.company.name
-        });
+        setUser(data);
+        setValue("image", data.image);
+        setValue("firstName", data.firstName);
+        setValue("lastName", data.lastName);
+        setValue("username", data.username);
+        setValue("phone", data.phone);
+        setValue("age", data.age);
+        setValue("email", data.email);
+
+        setValue("address.address", data.address.address);
+        setValue("address.city", data.address.city);
+
+        setValue("company.address", data.company.address);
+        setValue("company.city", data.company.city);
+        setValue("company.name", data.company.name);
+        // setValue("address", {
+        //   address: data.address.address,
+        //   city: data.address.city,
+        // });
+        // setValue("company", {
+        //   address: data.company.address,
+        //   city: data.company.city,
+        //   name: data.company.name,
+        // });
+
+
+
+
+        // setImage(data.image);
+        // setFirstName(data.firstName);
+        // setLastName(data.lastName);
+        // setUsername(data.username);
+        // setPhone(data.phone);
+        // setAge(data.age);
+        // setEmail(data.email);
+        // setAddress({
+        //   address: data.address.address,
+        //   city: data.address.city
+        // });
+        // setCompany({
+        //   address: data.company.address,
+        //   city: data.company.city,
+        //   name: data.company.name
+        // });
       } catch (error) {
         console.error("veri getirme hatası", error);
       }
     }
     fetchData();
-  }, [id]);
+  }, [params.id, setValue]);
 
-  const handleClickUpdate = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
 
     try {
-      const dataToUpdate = {
-        image: image,
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        phone: phone,
-        age: age,
-        email: email,
-        address: {
-          address: address.address,
-          city: address.city,
-        },
-        company: {
-          name: company.name,
-          address: company.address,
-          city: company.city,
-        },
-      };
+
+      setValue("image", data.image);
+      setValue("firstName", data.firstName);
+      setValue("lastName", data.lastName);
+      setValue("username", data.username);
+      setValue("phone", data.phone);
+      setValue("age", data.age);
+      setValue("email", data.email);
+
+      setValue("address.address", data.address.address);
+      setValue("address.city", data.address.city);
+
+      setValue("company.address", data.company.address);
+      setValue("company.city", data.company.city);
+      setValue("company.name", data.company.name);
+      // setValue("image", data.image);
+      //   setValue("firstName", data.firstName);
+      //   setValue("lastName", data.lastName);
+      //   setValue("username", data.username);
+      //   setValue("phone", data.phone);
+      //   setValue("age", data.age);
+      //   setValue("email", data.email);
+      //   setValue("address", {
+      //     address: data.address.address,
+      //     city: data.address.city,
+      //   });
+      //   setValue("company", {
+      //     address: data.company.address,
+      //     city: data.company.city,
+      //     name: data.company.name,
+      //   });
+      // const dataToUpdate = {
+      //   image: image,
+      //   firstName: firstName,
+      //   lastName: lastName,
+      //   username: username,
+      //   phone: phone,
+      //   age: age,
+      //   email: email,
+      //   address: {
+      //     address: address.address,
+      //     city: address.city,
+      //   },
+      //   company: {
+      //     name: company.name,
+      //     address: company.address,
+      //     city: company.city,
+      //   },
+      // };
 
       const response = await fetch(`http://localhost:3001/users/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToUpdate),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -105,14 +164,7 @@ export default function EditUser({ params }) {
       });
       const updatedData = await response.json();
 
-      const router = useRouter();
-      router.push('/users/page.js');
-      
-      
       console.log("Veriler başarıyla güncellendi:", updatedData);
-
-
-
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -132,15 +184,15 @@ export default function EditUser({ params }) {
           </p>
         </h1>
       </div>
-      {firstName ? (
+      {user && user.firstName ? (
         <>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="my-4 flex items-center space-x-4 ">
               <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
                 <div className="w-full h-full rounded-full overflow-hidden bg-white">
                   <Image
                     className="w-full h-full object-cover "
-                    src={image}
+                    src={user.image}
                     width={300}
                     height={300}
                     alt="Profil fotoğrafı"
@@ -155,12 +207,12 @@ export default function EditUser({ params }) {
                 <div className="flex items-center mr-5">
                   <input
                     className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
-                    onChange={(e) => setImage(e.target.value)}
-                    value={image}
+                    {...register("image")}
+                    defaultValue={user.image}
                   />
                   <button
                     className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
-                    onClick={handleClickUpdate}
+                    onClick={onSubmit}
                   >
                     Güncelle
                   </button>
@@ -175,8 +227,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  value={firstName}
+                  {...register("firstName")}
+                  defaultValue={user.fisrtName}
                 />
               </div>
 
@@ -186,8 +238,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setLastName(e.target.value)}
-                  value={lastName}
+                  {...register("lastName")}
+                  defaultValue={user.lastName}
                 />
               </div>
             </div>
@@ -199,8 +251,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
+                  {...register("username")}
+                    defaultValue={user.username}
                 />
               </div>
               <div className="m-4 w-1/2 ">
@@ -209,8 +261,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setPhone(e.target.value)}
-                  value={phone}
+                  {...register("phone")}
+                    defaultValue={user.phone}
                   type="number"
                 />
               </div>
@@ -224,8 +276,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setAge(e.target.value)}
-                  value={age}
+                  {...register("age")}
+                    defaultValue={user.age}
                   type="number"
                 />
               </div>
@@ -236,8 +288,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
+                  {...register("email")}
+                  defaultValue={user.email}
                 />
               </div>
             </div>
@@ -254,8 +306,8 @@ export default function EditUser({ params }) {
                 </label>
                 <textarea
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address.address}
+                  {...register("address.address")}
+                  defaultValue={user.address.address}
                 />
               </div>
               <div className="m-4 w-1/2">
@@ -264,8 +316,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address.city}
+                  {...register("address.city")}
+                  defaultValue={user.address.city}
                 />
               </div>
             </div>
@@ -280,8 +332,8 @@ export default function EditUser({ params }) {
                 </label>
                 <textarea
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setCompany(e.target.value)}
-                  value={company.address}
+                  {...register("company.address")}
+                  defaultValue={user.company.address}
                 />
               </div>
               <div className="m-4 w-1/2">
@@ -290,8 +342,8 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setCompany(e.target.value)}
-                  value={company.city}
+                  {...register("company.city")}
+                  defaultValue={user.company.city}
                 />
               </div>
             </div>
@@ -303,18 +355,19 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  onChange={(e) => setCompany(e.target.value)}
-                  value={company.name}
+                  {...register("company.name")}
+                  defaultValue={user.company.name}
                 />
               </div>
             </div>
-          </form>
+          
           <button
             className="bg-amber-400 hover:bg-amber-300 ml-6 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={handleClickUpdate}
+            type="submit"
           >
             Güncelle
           </button>
+          </form>
         </>
       ) : (
         <div>Kullanıcı Düzenleme Sayfası Yükleniyor...</div>

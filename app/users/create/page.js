@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import {useForm} from "react-hook-form";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const MySwal = withReactContent(Swal);
-
 
 export default function CreateUser() {
   const [createUser, setCreateUser] = useState({
@@ -28,20 +28,10 @@ export default function CreateUser() {
     },
   });
 
+ const router= useRouter();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name == "phone" || name == "age") {
-      if (!/^[0-9]+$/.test(value)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Hata!',
-          text: 'Sadece sayı giriniz.',
-        });
-        return;
-      }
-      
-    }
 
     setCreateUser((prevCreateUser) => {
       if (name.startsWith("address.")) {
@@ -71,12 +61,13 @@ export default function CreateUser() {
     });
   };
 
-
-  const {register, handleSubmit, formState: {error}} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = async (data) => {
-  console.log(data);
-
     try {
       const response = await fetch("http://localhost:3001/users", {
         method: "POST",
@@ -90,18 +81,16 @@ export default function CreateUser() {
         throw new Error("Kullanıcı kaydı sırasında bir hata oluştu.");
       }
       MySwal.fire({
-        icon: 'success',
-        title: 'Ürün başarıyla kaydedildi!',
-        text: 'Ürün başarıyla kaydedildi.',
+        icon: "success",
+        title: "Ürün başarıyla kaydedildi!",
+        text: "Ürün başarıyla kaydedildi.",
       });
-
-
-      console.log("Kullanıcı başarıyla kaydedildi.");
+router.push("/");
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Hata!',
-        text: 'Ürün kaydı başarısız.',
+        icon: "error",
+        title: "Hata!",
+        text: "Ürün kaydı başarısız.",
       });
       console.error(error.message);
     }
@@ -118,25 +107,28 @@ export default function CreateUser() {
       </div>
 
       <div className="container mx-auto p-5 bg-slate-100 border-slate-300 rounded m-4">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center space-x-6 pb-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)} >
+           <div className="flex items-center space-x-6 pb-4">
+       
           <div className="flex p-2 w-full ">
             <label className="block w-80 uppercase tracking-wide text-sm font-bold text-gray-700 mt-2">
               PROFİL FOTOĞRAFI:
             </label>
-            
-              <input
-                className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
-                placeholder=" Dosya linki eklenmedi"
-              ></input>
-           
+
+            <input
+              className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
+              placeholder=" Dosya linki eklenmedi"
+            ></input>
           </div>
           <button
-    
-            className="px-8 py-3 text-sm font-semibold text-white bg-amber-300 hover:bg-amber-300 rounded-md rounded-md " type="submit"
+            className="px-8 py-3 text-sm font-semibold text-white bg-amber-300 hover:bg-amber-300 rounded-md rounded-md "
+            type="submit"
           >
             Yükle
           </button>
-        </form>
+          </div>
+      
 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col pt-5">
           <div className="-mx-3 md:flex mb-6">
@@ -168,7 +160,7 @@ export default function CreateUser() {
                 id="grid-last-name"
                 type="text"
                 name="lastName"
-                value={createUser.lastName}
+                defaultValue={createUser.lastName}
                 {...register("lastName")}
               />
             </div>
@@ -200,13 +192,26 @@ export default function CreateUser() {
                 TELEFON NUMARASI:
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                  errors.phone ? "border-red-500" : "" // Hata durumunda çerçeve rengini değiştirme
+                }`}
                 id="grid-phone"
-                type="number"
+                type="text"
                 name="phone"
                 defaultValue={createUser.phone}
-{...register("phone")}
+                {...register("phone", {
+                  required: "Telefon numarası zorunludur",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Sadece rakamlarla telefon numarası giriniz",
+                  },
+                })}
               />
+              {errors.phone && (
+                <p className="text-red-500 text-xs italic">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
             <div className="md:w-1/2 px-3">
               <label
@@ -216,33 +221,64 @@ export default function CreateUser() {
                 YAŞ:
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                  errors.age ? "border-red-500" : "" 
+                }`}
                 id="grid-age"
-                type="number"
+                type="text"
                 name="age"
                 defaultValue={createUser.age}
-                {...register("age")}
+                {...register("age", {
+                  required: "Yaş zorunludur",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Sadece rakamlarla yaş giriniz",
+                  },
+                })}
               />
+              {errors.age && (
+                <p className="text-red-500 text-xs italic">
+                  {errors.age.message}
+                </p>
+              )}
+             
             </div>
-          </div>
-          <div className="-mx-3 md:flex mb-6">
-            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+            
+          
+            <div className="md:w-full px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-email"
+                htmlFor="grid-username"
               >
-                EMAIL:
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-email"
-                type="text"
-                name="email"
-                defaultValue={createUser.email}
-                {...register ("email")}
-              />
-            </div>
+                  EMAIL:
+                </label>
+               
+                <input
+                  className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                    errors.email ? "border-red-500" : ""
+                  }`}
+                  id="grid-email"
+                  type="text"
+                  name="email"
+                  defaultValue={createUser.email}
+                  {...register("email", {
+                    required: "E-posta adresi zorunludur",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Geçerli bir e-posta adresi giriniz",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+            
           </div>
+
+
           <div className="-mx-3 md:flex mb-6">
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -333,12 +369,13 @@ export default function CreateUser() {
             <button
               className="px-5 py-3 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500 rounded-md rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 "
               type="submit"
-             
             >
               Gönder
             </button>
           </div>
         </div>
+        
+        </form>
       </div>
     </div>
   );

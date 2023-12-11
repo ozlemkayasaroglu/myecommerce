@@ -3,11 +3,11 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const MySwal = withReactContent(Swal);
 
 export default function CreateProduct() {
-  
   const [createProduct, setCreateProduct] = useState({
     id: "",
     image: "",
@@ -18,34 +18,22 @@ export default function CreateProduct() {
     features: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "price" && isNaN(value)) {
-      // Eğer değer sayı değilse
-      Swal.fire({
-        icon: "error",
-        title: "Hata!",
-        text: "Sadece sayı giriniz.",
-      });
-      return;
-    }
-
-    setCreateProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
-  };
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCreateProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
+  };
 
+  const onSubmit = async (data) => {
     try {
       const response = await fetch(`http://localhost:3001/products`, {
         method: "POST",
@@ -56,14 +44,16 @@ export default function CreateProduct() {
       });
 
       if (!response.ok) {
-        throw new Error("Ürün kaydı başarılı");
+        throw new Error("Ürün kaydı başarısız");
       }
       MySwal.fire({
         icon: "success",
         title: "Ürün başarıyla kaydedildi!",
         text: "Ürün başarıyla kaydedildi.",
       });
-     
+
+      router.push("/");
+
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -80,7 +70,7 @@ export default function CreateProduct() {
       <div className="flex space-x-4 bg-amber-400">
         <h1 className="space-x-4 bg-amber-400 hover:bg-amber-300 p-5">
           <p className="text-white text-m block uppercase tracking-wide font-bold">
-            Ürün Ekleme Sayfası
+            Ürün Kaydı Sayfası
           </p>
         </h1>
       </div>
@@ -174,11 +164,22 @@ export default function CreateProduct() {
                 <input
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   id="grid-price"
-                  type="number"
+                  type="text"
                   name="price"
                   defaultValue={createProduct.price}
-                  {...register("price")}
+                  {...register("price", {
+                    required: "Fiyat bilgisi zorunludur",
+                    pattern: {
+                      value: /^[0-9]+$/,
+                      message: "Sadece rakamlarla fiyat giriniz",
+                    },
+                  })}
                 />
+                {errors.price && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.price.message}
+                  </p>)}
+              
               </div>
 
               <div className="md:w-1/2 px-3">

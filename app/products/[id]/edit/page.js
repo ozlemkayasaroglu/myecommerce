@@ -5,7 +5,6 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
-
 const MySwal = withReactContent(Swal);
 
 export default function EditProduct({ params }) {
@@ -20,7 +19,6 @@ export default function EditProduct({ params }) {
         setId(data.id);
         setProduct(data);
         setValue("id", data.id);
-        console.log(data.id);
         setValue("name", data.name);
         setValue("category", data.category);
         setValue("image", data.image);
