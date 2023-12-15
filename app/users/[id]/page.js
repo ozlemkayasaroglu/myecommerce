@@ -35,6 +35,7 @@ export default function ShowUser({ params }) {
   useEffect(() => {
     async function fetchData() {
       const data = await UserData(params.id);
+      console.log(data)
       setUsers(data.users);
       setId(data.id);
       setImage(data.image);

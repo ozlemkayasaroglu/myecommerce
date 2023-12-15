@@ -68,13 +68,14 @@ export default function CreateUser() {
   } = useForm();
 
   const onSubmit = async (data) => {
+   
     try {
       const response = await fetch("http://localhost:3001/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(createUser),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -85,7 +86,7 @@ export default function CreateUser() {
         title: "Ürün başarıyla kaydedildi!",
         text: "Ürün başarıyla kaydedildi.",
       });
-router.push("/");
+      router.push("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -119,6 +120,7 @@ router.push("/");
             <input
               className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
               placeholder=" Dosya linki eklenmedi"
+              {...register("image")}
             ></input>
           </div>
           <button
@@ -145,7 +147,7 @@ router.push("/");
                 type="text"
                 name="firstName"
                 defaultValue={createUser.firstName}
-                {...register("firtsName")}
+                {...register("firstName")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -293,7 +295,7 @@ router.push("/");
                 type="text"
                 name="address.address"
                 defaultValue={createUser.address.address}
-                {...register("address")}
+                {...register("address.address")}
               />
             </div>
             <div className="md:w-1/2 px-3">
@@ -309,7 +311,7 @@ router.push("/");
                 type="text"
                 name="address.city"
                 defaultValue={createUser.address.city}
-                {...register("city")}
+                {...register("address.city")}
               />
             </div>
           </div>
