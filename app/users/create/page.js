@@ -15,7 +15,7 @@ export default function CreateUser() {
     lastName: "",
     username: "",
     phone: "",
-    age: "",
+    password: "",
     email: "",
     address: {
       address: "",
@@ -70,7 +70,7 @@ export default function CreateUser() {
   const onSubmit = async (data) => {
    
     try {
-      const response = await fetch("http://localhost:3001/users", {
+      const response = await fetch("http://localhost:3001/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +168,7 @@ export default function CreateUser() {
             </div>
           </div>
           <div className="-mx-3 md:flex mb-6">
-            <div className="md:w-full px-3">
+            <div className="md:w-1/2 px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-username"
@@ -184,7 +184,34 @@ export default function CreateUser() {
                 {...register("username")}
               />
             </div>
+            <div className="md:w-1/2 px-3">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-age"
+              >
+                ŞİFRE:
+              </label>
+              <input
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                  errors.password ? "border-red-500" : "" 
+                }`}
+                id="grid-age"
+                type="text"
+                name="age"
+                defaultValue={createUser.password}
+                {...register("password", {
+                  required: "Şifre zorunludur",
+                  
+                })}
+              />
+              {errors.password && (
+                <p className="text-red-500 text-xs italic">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
           </div>
+
           <div className="-mx-3 md:flex mb-6">
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -215,39 +242,8 @@ export default function CreateUser() {
                 </p>
               )}
             </div>
+
             <div className="md:w-1/2 px-3">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-age"
-              >
-                YAŞ:
-              </label>
-              <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
-                  errors.age ? "border-red-500" : "" 
-                }`}
-                id="grid-age"
-                type="text"
-                name="age"
-                defaultValue={createUser.age}
-                {...register("age", {
-                  required: "Yaş zorunludur",
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Sadece rakamlarla yaş giriniz",
-                  },
-                })}
-              />
-              {errors.age && (
-                <p className="text-red-500 text-xs italic">
-                  {errors.age.message}
-                </p>
-              )}
-             
-            </div>
-            
-          
-            <div className="md:w-full px-3">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-username"

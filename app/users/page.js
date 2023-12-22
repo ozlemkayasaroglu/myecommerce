@@ -9,7 +9,7 @@ export default function UserList() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3001/users");
+        const response = await fetch("http://localhost:3001/user");
         if (!response.ok) {
           throw new Error("Veriler alınamadı");
         }
@@ -64,7 +64,7 @@ export default function UserList() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.users.map((user) => (
+              {users.map((user) => (
                 <tr key={user.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">

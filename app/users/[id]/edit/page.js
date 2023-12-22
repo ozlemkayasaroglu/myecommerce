@@ -9,33 +9,14 @@ const MySwal = withReactContent(Swal);
 
 export default function EditUser({ params }) {
   const { register, handleSubmit, setValue } = useForm();
-
   const [user, setUser] = useState(null);
   const [id, setId] = useState("");
 
-  // const [image, setImage] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [age, setAge] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [address, setAddress] = useState({
-  //   address: "",
-  //   city: "",
-  // });
-
-  // const [company, setCompany] = useState({
-  //   address: "",
-  //   city: "",
-  //   name: "",
-  // });
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await UserData(params.id);
-
         setId(data.id);
         setUser(data);
         setValue("image", data.image);
@@ -43,105 +24,41 @@ export default function EditUser({ params }) {
         setValue("lastName", data.lastName);
         setValue("username", data.username);
         setValue("phone", data.phone);
-        setValue("age", data.age);
-        setValue("email", data.email);
 
+        setValue("email", data.email);
+        setValue("password", data.password);
         setValue("address.address", data.address.address);
         setValue("address.city", data.address.city);
 
         setValue("company.address", data.company.address);
         setValue("company.city", data.company.city);
         setValue("company.name", data.company.name);
-        // setValue("address", {
-        //   address: data.address.address,
-        //   city: data.address.city,
-        // });
-        // setValue("company", {
-        //   address: data.company.address,
-        //   city: data.company.city,
-        //   name: data.company.name,
-        // });
-
-
-
-
-        // setImage(data.image);
-        // setFirstName(data.firstName);
-        // setLastName(data.lastName);
-        // setUsername(data.username);
-        // setPhone(data.phone);
-        // setAge(data.age);
-        // setEmail(data.email);
-        // setAddress({
-        //   address: data.address.address,
-        //   city: data.address.city
-        // });
-        // setCompany({
-        //   address: data.company.address,
-        //   city: data.company.city,
-        //   name: data.company.name
-        // });
+     
       } catch (error) {
-        console.error("veri getirme hatası", error);
+        console.error("veri getirme hatası", error.message);
       }
     }
     fetchData();
   }, [params.id, setValue]);
 
   const onSubmit = async (data) => {
-
     try {
-
       setValue("image", data.image);
       setValue("firstName", data.firstName);
       setValue("lastName", data.lastName);
       setValue("username", data.username);
       setValue("phone", data.phone);
-      setValue("age", data.age);
-      setValue("email", data.email);
 
+      setValue("email", data.email);
+      setValue("password", data.password);
       setValue("address.address", data.address.address);
       setValue("address.city", data.address.city);
-
       setValue("company.address", data.company.address);
       setValue("company.city", data.company.city);
       setValue("company.name", data.company.name);
-      // setValue("image", data.image);
-      //   setValue("firstName", data.firstName);
-      //   setValue("lastName", data.lastName);
-      //   setValue("username", data.username);
-      //   setValue("phone", data.phone);
-      //   setValue("age", data.age);
-      //   setValue("email", data.email);
-      //   setValue("address", {
-      //     address: data.address.address,
-      //     city: data.address.city,
-      //   });
-      //   setValue("company", {
-      //     address: data.company.address,
-      //     city: data.company.city,
-      //     name: data.company.name,
-      //   });
-      // const dataToUpdate = {
-      //   image: image,
-      //   firstName: firstName,
-      //   lastName: lastName,
-      //   username: username,
-      //   phone: phone,
-      //   age: age,
-      //   email: email,
-      //   address: {
-      //     address: address.address,
-      //     city: address.city,
-      //   },
-      //   company: {
-      //     name: company.name,
-      //     address: company.address,
-      //     city: company.city,
-      //   },
-      // };
+     
 
-      const response = await fetch(`http://localhost:3001/users/${id}`, {
+      const response = await fetch(`http://localhost:3001/user/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -153,18 +70,19 @@ export default function EditUser({ params }) {
         Swal.fire({
           icon: "error",
           title: "Hata!",
-          text: "Ürün güncelleme başarısız.",
+          text: "Kullanıcı güncelleme başarısız.",
         });
-        throw new Error("Verileri güncellerken bir hata oluştu.");
+        throw new Error("Kullanıcıları güncellerken bir hata oluştu.");
       }
       MySwal.fire({
         icon: "success",
         title: "Ürün Güncellendi!",
         text: "Ürün başarıyla güncellendi.",
       });
-      const updatedData = await response.json();
 
-      console.log("Veriler başarıyla güncellendi:", updatedData);
+      const updatedUser = await response.json();
+      console.log("Veriler başarıyla güncellendi:", updatedUser);
+      
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -211,9 +129,7 @@ export default function EditUser({ params }) {
                     defaultValue={user.image}
                   />
                   <button
-                    className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none"
-                    onClick={onSubmit}
-                  >
+                    className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none">
                     Güncelle
                   </button>
                 </div>
@@ -223,18 +139,18 @@ export default function EditUser({ params }) {
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  First Name:{" "}
+                 İsim:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
                   {...register("firstName")}
-                  defaultValue={user.fisrtName}
+                  defaultValue={user.firstName}
                 />
               </div>
 
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Last Name:{" "}
+                  Soyisim:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -247,44 +163,41 @@ export default function EditUser({ params }) {
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Kullanıcı Adı:{" "}
+                  Kullanıcı Adı:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
                   {...register("username")}
-                    defaultValue={user.username}
+                  defaultValue={user.username}
                 />
               </div>
-              <div className="m-4 w-1/2 ">
+              <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Telefon Numarası:{" "}
+                  Şifre:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("phone")}
-                    defaultValue={user.phone}
-                  type="number"
+                  {...register("password")}
+                  defaultValue={user.password}
                 />
               </div>
             </div>
 
             <div className="flex w-full pl-3">
-              <div className="m-4 w-1/2">
+              <div className="m-4 w-1/2 ">
                 <label className="block text-gray-700 text-sm font-bold">
-                  {" "}
-                  Yaş:{" "}
+                  Telefon Numarası:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("age")}
-                    defaultValue={user.age}
+                  {...register("phone")}
+                  defaultValue={user.phone}
                   type="number"
                 />
               </div>
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  {" "}
-                  Email{" "}
+                  Email:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -297,12 +210,12 @@ export default function EditUser({ params }) {
             <div className="leading-3 leading-normal border-b border-gray-300 mb-4 mt-4"></div>
 
             <h2 className="text-gray-400 text-md font-bold uppercase ml-6 ">
-              Adres-1{" "}
+              Adres-1:
             </h2>
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Mahalle-Sokak:{" "}
+                  Mahalle-Sokak:
                 </label>
                 <textarea
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -312,7 +225,7 @@ export default function EditUser({ params }) {
               </div>
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Şehir:{" "}
+                  Şehir:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -323,12 +236,12 @@ export default function EditUser({ params }) {
             </div>
 
             <h2 className="text-gray-400 text-md font-bold uppercase ml-6 ">
-              Adres-2
+              Adres-2:
             </h2>
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Mahalle-Sokak:{" "}
+                  Mahalle-Sokak:
                 </label>
                 <textarea
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -338,7 +251,7 @@ export default function EditUser({ params }) {
               </div>
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Şehir:{" "}
+                  Şehir:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -351,7 +264,7 @@ export default function EditUser({ params }) {
             <div className="flex w-full pl-3">
               <div className="m-4 w-full">
                 <label className="block text-gray-700 text-sm font-bold">
-                  Şirket Adı:{" "}
+                  Şirket Adı:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -360,13 +273,13 @@ export default function EditUser({ params }) {
                 />
               </div>
             </div>
-          
-          <button
-            className="bg-amber-400 hover:bg-amber-300 ml-6 text-white font-bold py-2 px-4 rounded mt-4"
-            type="submit"
-          >
-            Güncelle
-          </button>
+
+            <button
+              className="bg-amber-400 hover:bg-amber-300 ml-6 text-white font-bold py-2 px-4 rounded mt-4"
+              type="submit"
+            >
+              Güncelle
+            </button>
           </form>
         </>
       ) : (
