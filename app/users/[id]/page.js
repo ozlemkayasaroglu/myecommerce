@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useRouter } from "next/navigation";
 
 const MySwal = withReactContent(Swal);
 
@@ -52,6 +53,8 @@ export default function ShowUser({ params }) {
     fetchData();
   }, [id]);
 
+  const router = useRouter();
+
   const handleClickDelete = async (e) => {
     e.preventDefault();
     const response = await fetch(`http://localhost:3001/user/${id}`, {
@@ -73,6 +76,8 @@ export default function ShowUser({ params }) {
       title: "Kullanıcı silindi!",
       text: "Kullanıcı başarıyla silindi.",
     });
+
+    router.push("/");
 
     console.log("Veriler başarıyla güncellendi:", deletedUser);
   };

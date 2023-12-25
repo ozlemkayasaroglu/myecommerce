@@ -5,12 +5,13 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
 
 export default function EditProduct({ params }) {
   const { register, handleSubmit, setValue } = useForm();
   const [product, setProduct] = useState(null);
-  const [id, setId] =useState("");
+  const [id, setId] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -32,7 +33,11 @@ export default function EditProduct({ params }) {
     fetchData();
   }, [params.id, setValue]);
 
+ 
+const router = useRouter();
   const onSubmit = async (data) => {
+
+
     try {
       setValue("name", data.name);
       setValue("category", data.category);
@@ -63,16 +68,17 @@ export default function EditProduct({ params }) {
         text: "Ürün başarıyla güncellendi.",
       });
 
-      const updatedProducts = await response.json();
-      console.log("Ürünler başarıyla güncellendi:", updatedProducts);
+      const updatedProduct = await response.json();
+      
+      console.log("Veriler başarıyla güncellendi:", updatedProduct);
+      router.push("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Hata!",
         text: "Ürün güncelleme başarısız.",
       });
-
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 

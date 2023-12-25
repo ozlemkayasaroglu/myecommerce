@@ -5,7 +5,9 @@ import UserData from "@/components/UserData";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
+import {useRouter} from "next/navigation"
 const MySwal = withReactContent(Swal);
+
 
 export default function EditUser({ params }) {
   const { register, handleSubmit, setValue } = useForm();
@@ -40,7 +42,7 @@ export default function EditUser({ params }) {
     }
     fetchData();
   }, [params.id, setValue]);
-
+const router=useRouter();
   const onSubmit = async (data) => {
     try {
       setValue("image", data.image);
@@ -76,18 +78,19 @@ export default function EditUser({ params }) {
       }
       MySwal.fire({
         icon: "success",
-        title: "Ürün Güncellendi!",
-        text: "Ürün başarıyla güncellendi.",
+        title: "Kullanıcı Güncellendi!",
+        text: "Kullanıcı başarıyla güncellendi.",
       });
 
       const updatedUser = await response.json();
-      console.log("Veriler başarıyla güncellendi:", updatedUser);
       
+      console.log("Veriler başarıyla güncellendi:", updatedUser);
+      router.push("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Hata!",
-        text: "Ürün güncelleme başarısız.",
+        text: "Kullanıcı güncelleme başarısız.",
       });
       console.error(error.message);
     }

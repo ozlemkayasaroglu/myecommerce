@@ -52,7 +52,8 @@ export default function CreateProduct() {
         text: "Ürün başarıyla kaydedildi.",
       });
 
-      router.push("/");
+    
+      router.push('/');
 
     } catch (error) {
       Swal.fire({

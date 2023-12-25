@@ -5,12 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 
 const MySwal = withReactContent(Swal);
 
 export default function ShowProduct({ params }) {
-  // const [products, setProducts] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -32,7 +31,7 @@ export default function ShowProduct({ params }) {
     }
     fetchData();
   }, []);
-
+  const router = useRouter();
   const handleClickDelete = async (e) => {
     e.preventDefault();
 
@@ -56,8 +55,8 @@ export default function ShowProduct({ params }) {
     });
 
 
-    const router = useRouter();
-    router.push('/users/page.js');
+  
+    router.push('/');
 
     
     console.log("Veriler başarıyla güncellendi:", deletedUser);
