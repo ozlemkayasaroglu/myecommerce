@@ -46,7 +46,7 @@ export default function Login() {
             </div>
           </div>
           <div className="pb-5 block tracking-wide text-amber-400 text-bold flex justify-center">
-            <p>Parolanızı mı unuttunuz? </p>
+            <p>Parolanızı mı unuttunuz?</p>
           </div>
 
           <div className="items-center justify-between">
@@ -58,10 +58,10 @@ export default function Login() {
             </button>
           </div>
           <div className=" flex pt-6 block tracking-wide text-gray-600 text-s">
-            <p>Henüz bir hesabınız yok mu?</p>
+            <p>Henüz bir hesabınız yok mu? </p>
             <Link href="../users/create">
               
-              <p className="font-semibold text-purple-600"> Ücretsiz kaydol.</p>
+              <p className="font-semibold text-purple-600 ml-1">Ücretsiz kaydol.</p>
               </Link>
           </div>
         </div>

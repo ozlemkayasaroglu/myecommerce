@@ -9,7 +9,7 @@ export default function ShowProductList() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:3001/products");
+      const response = await fetch("http://localhost:3001/product");
       const data = await response.json();
       setProducts(data);
     }
