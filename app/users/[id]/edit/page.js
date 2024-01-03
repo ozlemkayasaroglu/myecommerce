@@ -5,15 +5,13 @@ import UserData from "@/components/UserData";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
-
 
 export default function EditUser({ params }) {
   const { register, handleSubmit, setValue } = useForm();
   const [user, setUser] = useState(null);
   const [id, setId] = useState("");
-
 
   useEffect(() => {
     async function fetchData() {
@@ -24,41 +22,24 @@ export default function EditUser({ params }) {
         setValue("image", data.image);
         setValue("firstName", data.firstName);
         setValue("lastName", data.lastName);
-        setValue("username", data.username);
         setValue("phone", data.phone);
-
         setValue("email", data.email);
-        setValue("password", data.password);
         setValue("address.address", data.address.address);
         setValue("address.city", data.address.city);
-
         setValue("company.address", data.company.address);
         setValue("company.city", data.company.city);
         setValue("company.name", data.company.name);
-     
       } catch (error) {
         console.error("veri getirme hatası", error.message);
       }
     }
     fetchData();
   }, [params.id, setValue]);
-const router=useRouter();
+
+  const router = useRouter();
+
   const onSubmit = async (data) => {
     try {
-      setValue("image", data.image);
-      setValue("firstName", data.firstName);
-      setValue("lastName", data.lastName);
-      setValue("username", data.username);
-      setValue("phone", data.phone);
-
-      setValue("email", data.email);
-      setValue("password", data.password);
-      setValue("address.address", data.address.address);
-      setValue("address.city", data.address.city);
-      setValue("company.address", data.company.address);
-      setValue("company.city", data.company.city);
-      setValue("company.name", data.company.name);
-     
 
       const response = await fetch(`http://localhost:3001/user/${id}`, {
         method: "PUT",
@@ -83,7 +64,7 @@ const router=useRouter();
       });
 
       const updatedUser = await response.json();
-      
+
       console.log("Veriler başarıyla güncellendi:", updatedUser);
       router.push("/");
     } catch (error) {
@@ -131,8 +112,7 @@ const router=useRouter();
                     {...register("image")}
                     defaultValue={user.image}
                   />
-                  <button
-                    className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none">
+                  <button className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none">
                     Güncelle
                   </button>
                 </div>
@@ -142,7 +122,7 @@ const router=useRouter();
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2">
                 <label className="block text-gray-700 text-sm font-bold">
-                 İsim:
+                  İsim:
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
@@ -163,28 +143,6 @@ const router=useRouter();
               </div>
             </div>
 
-            <div className="flex w-full pl-3">
-              <div className="m-4 w-1/2">
-                <label className="block text-gray-700 text-sm font-bold">
-                  Kullanıcı Adı:
-                </label>
-                <input
-                  className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("username")}
-                  defaultValue={user.username}
-                />
-              </div>
-              <div className="m-4 w-1/2">
-                <label className="block text-gray-700 text-sm font-bold">
-                  Şifre:
-                </label>
-                <input
-                  className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("password")}
-                  defaultValue={user.password}
-                />
-              </div>
-            </div>
 
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2 ">
