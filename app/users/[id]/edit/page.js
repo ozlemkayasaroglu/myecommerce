@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
 
 export default function EditUser({ params }) {
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [user, setUser] = useState(null);
   const [id, setId] = useState("");
 
@@ -19,16 +24,6 @@ export default function EditUser({ params }) {
         const data = await UserData(params.id);
         setId(data.id);
         setUser(data);
-        setValue("image", data.image);
-        setValue("firstName", data.firstName);
-        setValue("lastName", data.lastName);
-        setValue("phone", data.phone);
-        setValue("email", data.email);
-        setValue("address.address", data.address.address);
-        setValue("address.city", data.address.city);
-        setValue("company.address", data.company.address);
-        setValue("company.city", data.company.city);
-        setValue("company.name", data.company.name);
       } catch (error) {
         console.error("veri getirme hatası", error.message);
       }
@@ -40,7 +35,6 @@ export default function EditUser({ params }) {
 
   const onSubmit = async (data) => {
     try {
-
       const response = await fetch(`http://localhost:3001/user/${id}`, {
         method: "PUT",
         headers: {
@@ -126,9 +120,25 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("firstName")}
                   defaultValue={user.firstName}
+                  {...register("firstName", {
+                    required: "İsim zorunludur.",
+                    maxLength: {
+                      value: 20,
+                      message: "İsim maksimum 20 karakter olmalıdır.",
+                    },
+                    pattern: {
+                      value: /^[A-Za-z]+$/,
+                      message: "Sadece harf içermelidir.",
+                    },
+                  })}
+                  aria-invalid={errors.firstName ? "true" : "false"}
                 />
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
 
               <div className="m-4 w-1/2">
@@ -137,35 +147,75 @@ export default function EditUser({ params }) {
                 </label>
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("lastName")}
                   defaultValue={user.lastName}
+                  {...register("lastName", {
+                    required: "Soyisim zorunludur.",
+                    maxLength: {
+                      value: 30,
+                      message: "Soyisim maksimum 20 karakter olmalıdır.",
+                    },
+                    pattern: {
+                      value: /^[A-Za-z]+$/,
+                      message: "Sadece harf içermelidir.",
+                    },
+                  })}
+                  aria-invalid={errors.lastName ? "true" : "false"}
                 />
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
-
 
             <div className="flex w-full pl-3">
               <div className="m-4 w-1/2 ">
                 <label className="block text-gray-700 text-sm font-bold">
                   Telefon Numarası:
                 </label>
+
                 <input
                   className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("phone")}
+                  id="grid-phone"
+                  type="text"
                   defaultValue={user.phone}
-                  type="number"
+                  {...register("phone", {
+                    required: "Telefon numarası zorunludur",
+                    pattern: {
+                      value: /^[0-9]+$/,
+                      message: "Sadece rakamlarla telefon numarası giriniz",
+                    },
+                  })}
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.phone.message}
+                  </p>
+                )}
               </div>
-              <div className="m-4 w-1/2">
-                <label className="block text-gray-700 text-sm font-bold">
-                  Email:
-                </label>
-                <input
-                  className="border-2 border-gray-300 rounded p-2 w-full"
-                  {...register("email")}
-                  defaultValue={user.email}
-                />
-              </div>
+
+              <input
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                  errors.email ? "border-red-500" : ""
+                }`}
+                id="grid-email"
+                type="text"
+                name="email"
+                defaultValue={user.email}
+                {...register("email", {
+                  required: "E-posta adresi zorunludur",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "Geçerli bir e-posta adresi giriniz",
+                  },
+                })}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs italic">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="leading-3 leading-normal border-b border-gray-300 mb-4 mt-4"></div>

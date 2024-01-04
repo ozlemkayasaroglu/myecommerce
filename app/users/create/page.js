@@ -85,13 +85,30 @@ export default function CreateUser() {
                 >
                   İSİM:
                 </label>
+
                 <input
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   id="grid-first-name"
                   type="text"
                   name="firstName"
-                  {...register("firstName")}
+                  {...register("firstName", {
+                    required: "İsim zorunludur.",
+                    maxLength: {
+                      value: 20,
+                      message: "İsim maksimum 20 karakter olmalıdır.",
+                    },
+                    pattern: {
+                      value: /^[A-Za-z]+$/,
+                      message: "Sadece harf içermelidir.",
+                    },
+                  })}
+                  aria-invalid={errors.firstName ? "true" : "false"}
                 />
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -105,8 +122,24 @@ export default function CreateUser() {
                   id="grid-last-name"
                   type="text"
                   name="lastName"
-                  {...register("lastName")}
+                  {...register("lastName", {
+                    required: "Soyisim zorunludur.",
+                    maxLength: {
+                      value: 30,
+                      message: "Soyisim maksimum 20 karakter olmalıdır.",
+                    },
+                    pattern: {
+                      value: /^[A-Za-z]+$/,
+                      message: "Sadece harf içermelidir.",
+                    },
+                  })}
+                  aria-invalid={errors.lastName ? "true" : "false"}
                 />
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="-mx-3 md:flex mb-6">
@@ -122,8 +155,21 @@ export default function CreateUser() {
                   id="grid-username"
                   type="text"
                   name="username"
-                  {...register("username")}
+                  {...register("username", {
+                    required: "Kullanıcı adı zorunludur.",
+                    maxLength: {
+                      value: 20,
+                      message: "kullanıcı adı maksimum 20 karakter olmalıdır.",
+                    },
+                  })}
+                  aria-invalid={errors.username ? "true" : "false"}
                 />
+
+                {errors.username && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.username.message}
+                  </p>
+                )}
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -161,10 +207,10 @@ export default function CreateUser() {
                 </label>
                 <input
                   className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
-                    errors.phone ? "border-red-500" : "" // Hata durumunda çerçeve rengini değiştirme
+                    errors.phone ? "border-red-500" : ""
                   }`}
                   id="grid-phone"
-                  type="text"
+                  type="tel"
                   name="phone"
                   {...register("phone", {
                     required: "Telefon numarası zorunludur",
@@ -180,6 +226,8 @@ export default function CreateUser() {
                   </p>
                 )}
               </div>
+
+
 
               <div className="md:w-1/2 px-3">
                 <label
@@ -225,8 +273,17 @@ export default function CreateUser() {
                   id="grid-address"
                   type="text"
                   name="address.address"
-                  {...register("address.address")}
+                  {...register("address.address", {
+                    required: "Adres zorunludur.",
+                  })}
+                  aria-invalid={errors.address.address ? "true" : "false"}
                 />
+
+                {errors.address.address && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.address.address.message}
+                  </p>
+                )}
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -240,8 +297,17 @@ export default function CreateUser() {
                   id="grid-city"
                   type="text"
                   name="address.city"
-                  {...register("address.city")}
+                  {...register("address.city", {
+                    required: "Şehir zorunludur.",
+                  })}
+                  aria-invalid={errors.address.city ? "true" : "false"}
                 />
+
+                {errors.address.city && (
+                  <p className="text-red-500 text-xs italic mt-1" role="alert">
+                    {errors.address.city.message}
+                  </p>
+                )}
               </div>
             </div>
             <div className="-mx-3 md:flex mb-6">
@@ -257,8 +323,8 @@ export default function CreateUser() {
                   id="grid-company-name"
                   type="text"
                   name="company.name"
-                  {...register("company.name")}
-                />
+                  {...register("company.name")} 
+                  />
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -272,8 +338,8 @@ export default function CreateUser() {
                   id="grid-company-address"
                   type="text"
                   name="company.address"
-                  {...register("company.address")}
-                />
+                  {...register("company.address")} 
+                  />
               </div>
             </div>
             <div className="-mx-3 md:flex mb-2">

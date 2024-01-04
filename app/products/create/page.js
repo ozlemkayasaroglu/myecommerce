@@ -162,6 +162,7 @@ export default function CreateProduct() {
                 >
                   FİYAT:
                 </label>
+                
                 <input
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   id="grid-price"
