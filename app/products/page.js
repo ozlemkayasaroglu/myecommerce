@@ -9,7 +9,7 @@ export default function ProductLists() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3001/products");
+        const response = await fetch("http://localhost:3001/product");
         if (!response.ok) {
 
           throw new Error("Veriler alınamadı");

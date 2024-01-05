@@ -9,7 +9,14 @@ import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
 
 export default function EditProduct({ params }) {
-  const { register, handleSubmit, setValue } = useForm();
+
+  const { 
+    register, 
+    handleSubmit, 
+    setValue ,
+    formState: {errors},
+  } = useForm();
+
   const [product, setProduct] = useState(null);
   const [id, setId] = useState("");
 
@@ -19,13 +26,6 @@ export default function EditProduct({ params }) {
         const data = await ProductData(params.id);
         setId(data.id);
         setProduct(data);
-        setValue("id", data.id);
-        setValue("name", data.name);
-        setValue("category", data.category);
-        setValue("image", data.image);
-        setValue("price", data.price);
-        setValue("description", data.description);
-        setValue("features", data.features);
       } catch (error) {
         console.error("veri getirme hatası:", error.message);
       }
@@ -35,9 +35,8 @@ export default function EditProduct({ params }) {
 
  
 const router = useRouter();
+
   const onSubmit = async (data) => {
-
-
     try {
       setValue("name", data.name);
       setValue("category", data.category);
@@ -113,9 +112,11 @@ const router = useRouter();
                 </label>
                 <div className="flex items-center mr-5">
                   <input
-                    {...register("image")}
-                    defaultValue={product.image}
-                    className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
+                  className="w-40 px-2 py-1 border border-gray-300 rounded-l focus:outline-none w-96 mr-3"
+                  defaultValue={product.image}
+                  {...register("image")}
+                    
+                    
                   />
                   <button className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-1 px-4 rounded-r focus:outline-none">
                     Güncelle
@@ -131,9 +132,16 @@ const router = useRouter();
               <input
                 className="border-2 border-gray-300 rounded p-2 w-full"
                 defaultValue={product.name}
-                {...register("name")}
+                {...register("name", {
+                  required: "İsim zorunludur.",
+                  maxLength: {
+                    value: 30,
+                    message: "İsim maksimum 30 karakter olmalıdır.",
+                  }
+
+                })}
+                aria-invalid={errors.name ? "true" : "false"}
               />
-              <br />
             </div>
 
             <div className="my-4">
@@ -144,10 +152,16 @@ const router = useRouter();
               <input
                 className="border-2 border-gray-300 rounded p-2 w-full"
                 defaultValue={product.category}
-                {...register("category")}
-              />
+                {...register("category", {
+                  required: "Kategori zorunludur.",
+                  maxLength: {
+                    value: 30,
+                    message: "Kategori maksimum 30 karakter olmalıdır.",
+                  }
 
-              <br />
+                })}
+                aria-invalid={errors.category ? "true" : "false"}
+                />
             </div>
 
             <div className="my-4">
@@ -156,11 +170,21 @@ const router = useRouter();
               </label>
               <input
                 className="border-2 border-gray-300 rounded p-2 w-full"
-                type="number"
+                type="text"
                 defaultValue={product.price}
-                {...register("price")}
+                {...register("price", {
+                  required: "Fiyat bilgisi zorunludur",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Sadece rakamlarla fiyat yazınız",
+                  },
+                })}
               />
-              <br />
+              {errors.price && (
+                <p className="text-red-500 text-xs italic">
+                  {errors.price.message}
+                </p>
+              )}
             </div>
             <div className="my-4">
               <label className="block text-gray-700 text-sm font-bold">
@@ -172,6 +196,9 @@ const router = useRouter();
                 cols="50"
                 defaultValue={product.description}
                 {...register("description")}
+
+
+
               />
               <br />
             </div>
@@ -186,6 +213,9 @@ const router = useRouter();
                 cols="50"
                 defaultValue={product.features}
                 {...register("features")}
+
+
+
               />
               <br />
             </div>

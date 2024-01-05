@@ -226,8 +226,7 @@ export default function CreateUser() {
                   </p>
                 )}
               </div>
-
-
+          
 
               <div className="md:w-1/2 px-3">
                 <label
@@ -273,17 +272,10 @@ export default function CreateUser() {
                   id="grid-address"
                   type="text"
                   name="address.address"
-                  {...register("address.address", {
-                    required: "Adres zorunludur.",
-                  })}
-                  aria-invalid={errors.address.address ? "true" : "false"}
+                  {...register("address.address")}
                 />
 
-                {errors.address.address && (
-                  <p className="text-red-500 text-xs italic mt-1" role="alert">
-                    {errors.address.address.message}
-                  </p>
-                )}
+               
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -297,17 +289,13 @@ export default function CreateUser() {
                   id="grid-city"
                   type="text"
                   name="address.city"
-                  {...register("address.city", {
-                    required: "Şehir zorunludur.",
-                  })}
-                  aria-invalid={errors.address.city ? "true" : "false"}
+                  {...register("address.city"
+                  )}
+                 
                 />
 
-                {errors.address.city && (
-                  <p className="text-red-500 text-xs italic mt-1" role="alert">
-                    {errors.address.city.message}
-                  </p>
-                )}
+                
+                
               </div>
             </div>
             <div className="-mx-3 md:flex mb-6">
@@ -323,8 +311,8 @@ export default function CreateUser() {
                   id="grid-company-name"
                   type="text"
                   name="company.name"
-                  {...register("company.name")} 
-                  />
+                  {...register("company.name")}
+                />
               </div>
               <div className="md:w-1/2 px-3">
                 <label
@@ -338,8 +326,8 @@ export default function CreateUser() {
                   id="grid-company-address"
                   type="text"
                   name="company.address"
-                  {...register("company.address")} 
-                  />
+                  {...register("company.address")}
+                />
               </div>
             </div>
             <div className="-mx-3 md:flex mb-2">

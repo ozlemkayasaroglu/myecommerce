@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useForm } from "react-hook-form";
@@ -8,34 +7,19 @@ import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
 
 export default function CreateProduct() {
-  const [createProduct, setCreateProduct] = useState({
-    id: "",
-    image: "",
-    name: "",
-    category: "",
-    price: "",
-    description: "",
-    features: "",
-  });
 
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCreateProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
-  };
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`http://localhost:3001/products`, {
+      const response = await fetch(`http://localhost:3001/product`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +71,7 @@ export default function CreateProduct() {
               <input
                 className="appearance-none block w-full bg-white text-gray-700 rounded py-3 px-4"
                 placeholder=" Dosya linki eklenmedi"
-                defaultValue={createProduct.image}
+             
                 {...register("image")}
               ></input>
             </div>
@@ -114,8 +98,14 @@ export default function CreateProduct() {
                   id="grid-name"
                   type="text"
                   name="name"
-                  defaultValue={createProduct.name}
-                  {...register("name")}
+                  {...register("name", {
+                    required: "İsim zorunludur.",
+                    maxLength: {
+                      value: 20,
+                      message: "İsim maksimum 20 karakter olmalıdır.",
+                    }
+                  })}
+                  aria-invalid={errors.name ? "true": "false"}
                 />
               </div>
 
@@ -131,8 +121,14 @@ export default function CreateProduct() {
                   id="grid-category-name"
                   type="text"
                   name="category"
-                  defaultValue={createProduct.category}
-                  {...register("category")}
+                  {...register("category", {
+                    required: "Kategori zorunludur.",
+                    maxLength: {
+                      value: 20,
+                      message: "Kategori maksimum 20 karakter olmalıdır.",
+                    }
+                  })}
+                  aria-invalid={errors.category ? "true": "false"}
                 />
               </div>
             </div>
@@ -149,8 +145,8 @@ export default function CreateProduct() {
                   id="grid-features"
                   type="text"
                   name="features"
-                  defaultValue={createProduct.features}
                   {...register("features")}
+                  aria-invalid={errors.category ? "true": "false"}
                 />
               </div>
             </div>
@@ -168,7 +164,6 @@ export default function CreateProduct() {
                   id="grid-price"
                   type="text"
                   name="price"
-                  defaultValue={createProduct.price}
                   {...register("price", {
                     required: "Fiyat bilgisi zorunludur",
                     pattern: {
@@ -196,7 +191,6 @@ export default function CreateProduct() {
                   id="grid-description"
                   type="text"
                   name="description"
-                  defaultValue={createProduct.description}
                   {...register("description")}
                 />
               </div>

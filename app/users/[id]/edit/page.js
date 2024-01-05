@@ -9,12 +9,14 @@ import { useRouter } from "next/navigation";
 const MySwal = withReactContent(Swal);
 
 export default function EditUser({ params }) {
+  
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm();
+
   const [user, setUser] = useState(null);
   const [id, setId] = useState("");
 
@@ -195,27 +197,36 @@ export default function EditUser({ params }) {
                 )}
               </div>
 
-              <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
-                  errors.email ? "border-red-500" : ""
-                }`}
-                id="grid-email"
-                type="text"
-                name="email"
-                defaultValue={user.email}
-                {...register("email", {
-                  required: "E-posta adresi zorunludur",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Geçerli bir e-posta adresi giriniz",
-                  },
-                })}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs italic">
-                  {errors.email.message}
-                </p>
-              )}
+              
+              <div className="md:w-1/2 px-3">
+                <label
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="grid-username"
+                >
+                  EMAIL:
+                </label>
+
+                <input
+                  className="border-2 border-gray-300 rounded p-2 w-full"
+                  id="grid-phone"
+                 
+                  type="text"
+                  name="email"
+                  defaultValue={user.email}
+                  {...register("email", {
+                    required: "E-posta adresi zorunludur",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Geçerli bir e-posta adresi giriniz",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className="leading-3 leading-normal border-b border-gray-300 mb-4 mt-4"></div>
